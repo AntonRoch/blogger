@@ -342,6 +342,7 @@ bHideLoading){
       if(!aPosts[postID]){aPosts[postID]=true;postCount++;}
     });
     $.each(aPosts, function(postKey,postVal){
+      if(!isNaN(postKey)){//202308\\
       chkPostCount++;
       $.getJSON(
       "https://"+blogger_hostname+"/feeds/"+postKey+"/comments/default?redirect=false&max-results="+csMaxResult+"&start-index=1&alt=json-in-script&callback=?",
@@ -436,6 +437,7 @@ bHideLoading){
           document.getElementById(rDivID).innerHTML = result;
         }
       });//<getJSON>
+      };//202308\\
     });//LoopPosts
   });//<getJSON>
 }
