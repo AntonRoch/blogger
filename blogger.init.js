@@ -36,9 +36,38 @@ function clearRecentComments01(sdiv) {
   setcookie(cookieName, 0, cookieDays);
 }
 
-function commentPaging() {
-  if (numEntryComment) {document.write(strPagination.replace(/\&nbsp;/gi, ''));}
-  else {commentPagination(data__post_url,data__post_numComments*1, 1, false, '');}
+function commentPaging(div='commentpaging') {
+  //{xuteng}
+  if (numEntryComment) { db(div, strPagination.replace(/\&nbsp;/gi, '')); }
+  else { commentPaginate(div, data__post_url, data__post_numComments*1, 1, false, ':'); }
+}
+
+function commentPaginate(div, url, comment, printPaginating, pageNo, space) {
+  //{xuteng}
+  strEntryURL = url;
+  numEntryComment = comment;
+  var posturl = url;
+  var comment = comment;
+  cmpage = Math.ceil(comment/numCommentPerPage);
+  if (cmpage<=1) {
+    strPagination = '1';
+    numCommentPage = 1;
+  } else {
+    strPagination = '';
+    if (!pageNo) {
+      var pagePath = document.location.href.match(/commentPage=\d+/gi);
+      if (pagePath) pageNo = pagePath[0].substring(pagePath[0].indexOf('=')+1);
+      else pageNo = 1;
+    }
+    for (var i=1; i<=cmpage; i++) {
+      if (i==pageNo) { strPagination += '<a name="CurrentCommentPage"><font color="red">'+pageNo+'</font></a>'; }
+      else { strPagination += '<a href="'+posturl+'?commentPage='+i+'#comments">'+i+'</a>'; }
+      if (space) { strPagination += space; }
+    }
+    numCommentPage = pageNo;
+  }
+  if (printPaginating) db(div, strPagination);
+  else return(strPagination);
 }
 
 function updateOneComment() {
@@ -56,7 +85,7 @@ function writeFeedScript() {
 //Default
 
 function setAttributeOnload(object, attribute, val) {
-  if(window.addEventListener) {
+  if (window.addEventListener) {
     window.addEventListener('load', function(){ object[attribute] = val; }, false);
   } else {
     window.attachEvent('onload', function(){ object[attribute] = val; });
@@ -98,7 +127,6 @@ function initGlobalStatus() {
   strBlogID = data__blog_blogId;
   strPostID = data__post_id;
   strPostURL = data__post_url;
-  //hideMainMenu();
 }
 
 function initTimerStatus() {
