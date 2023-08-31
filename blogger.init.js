@@ -39,7 +39,7 @@ function clearRecentComments01(sdiv) {
 function commentPaging(div='commentpaging') {
   //{xuteng}
   if (numEntryComment) { db(div, strPagination.replace(/\&nbsp;/gi, '')); }
-  else { commentPaginate(div, data__post_url, data__post_numComments*1, 1, false, ':'); }
+  else { commentPaginate(div, data__post_url, data__post_numComments*1, 1, false, SPACE); }
 }
 
 function commentPaginate(div, url, comment, printPaginating, pageNo, space) {
