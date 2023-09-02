@@ -284,7 +284,7 @@ function convertCustomFontTags(text){
   text = updateCustomTag(text, /\[fo:/i, 4, /\]/i, 1, /\[\/fo\]/i, 5, '<font ', '>', '</font>', true);
   text = updateCustomTag(text, /\[ss:/i, 4, /\]/i, 1, /\[\/ss\]/i, 5, '<span style="', '">', '</span>');
   text = updateCustomTag(text, /\[fa=/i, 4, /\]/i, 1, /\[\/fa\]/i, 5, '<font face="', '">', '</font>');
-  text = updateCustomTag(text, /\[si=/i, 4, /\]/i, 1, /\[\/si\]/i, 5, '<font size="', '">', '</font>');
+  text = updateCustomTag(text, /\[si=/i, 4, /\]/i, 1, /\[\/si\]/i, 5, '<font sized="', '">', '</font>');
   text = updateCustomTag(text, /\[co=/i, 4, /\]/i, 1, /\[\/co\]/i, 5, '<font color="', '">', '</font>');
   text = updateCustomTag(text, /\[bg=/i, 4, /\]/i, 1, /\[\/bg\]/i, 5, '<span style="background-color:', '">', '</span>');
   text = updateCustomTag(text, /\[al=/i, 4, /\]/i, 1, /\[\/al\]/i, 5, '<div align="', '">', '</div>');
@@ -293,7 +293,7 @@ function convertCustomFontTags(text){
   ////
   //// Clean well-formed tag attributes
   text = text.tag2tag("img", "", "(src|width|height|border)");
-  text = text.tag2tag("font", "", "(size|color|face)");
+  text = text.tag2tag("font", "", "(sized|color|face)");
   text = text.tag2tag("span", "", "(style|class)");
   text = text.tag2tag("div", "", "(align|style|class)");
   text = text.tag2tag("b", "", "(class|value|fixed)");
@@ -385,7 +385,7 @@ String.prototype.html2cmt=function(){
   code = code.tag2cmt("img", "{liveleak}", "]", "src", "[liveleak=", "");
   code = code.tag2cmt("img", "#picture#", "]", "src", "[img=", "");
   ////
-  code = code.tag2cmtEx("font", "]", "", "[fo:", "[/fo]", "(size|color|face|class)");
+  code = code.tag2cmtEx("font", "]", "", "[fo:", "[/fo]", "(sized|color|face|class)");
   code = code.tag2cmtEx("img", "[/fim]", "src", "[fim]", "", "(src|width|height|border)");
   code = code.tag2cmtEx("span", "]", "style", "[ss:", "[/ss]");
   code = code.tag2cmtEx("div", "]", "align", "[al=", "[/al]");
@@ -411,9 +411,9 @@ String.prototype.tag2tag=function(tagName, aName1, allowedAttr){
     var style = tags[i].getAttribute("style");
     if((style)&&(style.match(/behavior/i))){tags[i].setAttribute("style",style.replace(/behavior/gi,"scr"));}//MSIE.BUG
     if(tagName=="font" && autoResizeCommentFont){
-      var fsize = tags[i].getAttribute("size");
-      if(Number(fsize)>nFontSizeMax){tags[i].setAttribute("size",nFontSizeMin);}
-      if(Number(fsize)<nFontSizeMin){tags[i].setAttribute("size",nFontSizeMax-1);}
+      var fsize = tags[i].getAttribute("sized");
+      if(Number(fsize)>nFontSizeMax){tags[i].setAttribute("sized",nFontSizeMin);}
+      if(Number(fsize)<nFontSizeMin){tags[i].setAttribute("sized",nFontSizeMax-1);}
     }
     for(var j=0; j<tags[i].attributes.length; j++){
       var aaName = tags[i].attributes[j].name.toLowerCase();
@@ -517,7 +517,7 @@ function openAuthorStyle(url, name, ctime, returnvalue){
       var sBold = UserVIPs[i][6];
       var sBCol = UserVIPs[i][7];
       var avaID = UserVIPs[i][8]; //ShitAvatar
-      strSetStyle = '<font size="'+fSize+'" color="'+color+'" face="'+fFace+'">';
+      strSetStyle = '<font sized="'+fSize+'" color="'+color+'" face="'+fFace+'">';
       if(returnvalue){strTextStyle+=strSetStyle;}
       else{document.write(strSetStyle);}
       if(sItal){
@@ -630,13 +630,13 @@ function showVIP(uri, tag, width, nbsp, ava, ancRec, ancData){
       }
       if(tag){
         /// icon += nbsp + "<div class='fb-like' data-href='"+uri+"' data-send='false' data-layout='button_count' data-width='450' data-show-faces='false'></div>";
-        /// icon += nbsp + '<g:plusone size="medium" href="'+uri+'"></g:plusone>';
+        /// icon += nbsp + '<g:plusone sized="medium" href="'+uri+'"></g:plusone>';
       }
     }
   }
   if(ancRec||ancData){
     /// icon += nbsp + "<div class='fb-like' data-href='"+cmtUrl+"' data-send='false' data-layout='button_count' data-width='450' data-show-faces='false'></div>";
-    /// icon += nbsp + '<g:plusone size="small" href="'+cmtUrl+'"></g:plusone>';
+    /// icon += nbsp + '<g:plusone sized="small" href="'+cmtUrl+'"></g:plusone>';
   }
   return(icon);
 }
@@ -655,30 +655,7 @@ function showPaginating(span_id, content){
   updateDivContent(span_id, content);
 }
 function commentPagination(url, comment, printPaginating, pageNo, space){
-  strEntryURL = url;
-  numEntryComment = comment;
-  var posturl = url;
-  var comment = comment;
-  cmpage = Math.ceil(comment/numCommentPerPage);
-  if(cmpage<=1){
-    strPagination = '1';
-    numCommentPage = 1;
-  }else{
-    strPagination = '';
-    if(!pageNo){
-      var pagePath = document.location.href.match(/commentPage=\d+/gi);
-      if(pagePath) pageNo = pagePath[0].substring(pagePath[0].indexOf('=')+1);
-      else pageNo = 1;
-    }
-    for(var i=1; i<=cmpage; i++){
-      if(i==pageNo){strPagination += '<a name="CurrentCommentPage"><font color="red">'+pageNo+'</font></a>';}
-      else{strPagination += '<a href="'+posturl+'?commentPage='+i+'#comments">'+i+'</a>';}
-      if(space){strPagination += space;}
-    }
-    numCommentPage = pageNo;
-  }
-  if(printPaginating) document.write(strPagination);
-  else return(strPagination);
+  return commentPaginate('commentpaging', url, comment, printPaginating, pageNo, space);
 }
 function getPostPaginating(json){
   var numCmnts = json.feed.openSearch$totalResults.$t;

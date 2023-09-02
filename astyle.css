@@ -133,69 +133,23 @@
  color:#FF0000;
  font-size:medium;}
 /***/
-.buttoner{
- width:240px;
- margin:auto;
- padding:auto;}
-.button{
- background-color:#4D7A9F;
- border-radius:6px;
- width:220px;
- border:none;
- color:white;
- text-align:left;
- text-decoration:none;
- font-family:GARAMOND;
- display:inline-block;
- cursor:pointer;
- margin:2px;
- padding:5px;}
-.label{
- background-color:#A5AC20;
- border-radius:6px;
- width:220px;
- border:none;
- color:white;
- text-align:left;
- font-family:GARAMOND;
- display:inline-block;
- margin:2px;
- padding:5px;}
-.ltlab{
- background-color:lightblue;
- border-radius:6px;
- width:220px;
- border:none;
- color:black;
- text-align:left;
- font-family:GARAMOND;
- display:inline-block;
- margin:2px;
- padding:5px;}
-.trlab{
- color:black;
- text-align:left;
- font-family:GARAMOND;
- margin:2px;
- padding:5px;}
-/***/
 .obox{
  background-image:url(obg.gif);
  border-radius:25px;
  border:4px solid #f0ad26;
- width:254px;
+ width:90%;
  padding:10px;}
 .gbox{
  background-image:url(gbg.gif);
  border-radius:25px;
  border:4px solid #728a71;
- width:254px;
+ width:90%;
  padding:10px;}
 .vbox{
  background-image:url(vbg.gif);
  border-radius:25px;
  border:4px solid #957ea6;
- width:254px;
+ width:90%;
  padding:10px;}
 /***/
 .ob{
@@ -206,7 +160,7 @@
  border:1px solid #f0ad26;
  box-sizing:border-box;
  color:#333333;
- width:240px;
+ width:80%;
  margin:2px;
  padding:5px;}
 .ob:focus{
@@ -221,7 +175,7 @@
  border:1px solid #728a71;
  box-sizing:border-box;
  color:#333333;
- width:240px;
+ width:80%;
  margin:2px;
  padding:5px;}
 .gb:focus{
@@ -236,7 +190,7 @@
  border:1px solid #957ea6;
  box-sizing:border-box;
  color:#333333;
- width:240px;
+ width:80%;
  margin:2px;
  padding:5px;}
 .vb:focus{
@@ -247,7 +201,7 @@
 .obutton{
  background-color:#f0ad26;
  border-radius:6px;
- width:230px;
+ width:70%;
  border:none;
  color:grey;
  text-align:center;
@@ -260,7 +214,7 @@
 .gbutton{
  background-color:#728a71;
  border-radius:6px;
- width:230px;
+ width:70%;
  border:none;
  color:white;
  text-align:center;
@@ -273,7 +227,7 @@
 .vbutton{
  background-color:#957ea6;
  border-radius:6px;
- width:230px;
+ width:70%;
  border:none;
  color:white;
  text-align:center;
@@ -287,39 +241,39 @@
 .ohead{
  background-color:#f0ad26;
  border-radius:6px;
- width:230px;
+ width:70%;
  border:none;
  color:grey;
  text-align:center;
  text-decoration:bold;
  font-family:GARAMOND;
- font-size:14px;
+ font-size:medium;
  display:inline-block;
  margin:2px;
  padding:5px;}
 .ghead{
  background-color:#728a71;
  border-radius:6px;
- width:230px;
+ width:70%;
  border:none;
  color:white;
  text-align:center;
  text-decoration:bold;
  font-family:GARAMOND;
- font-size:14px;
+ font-size:medium;
  display:inline-block;
  margin:2px;
  padding:5px;}
 .vhead{
  background-color:#957ea6;
  border-radius:6px;
- width:230px;
+ width:70%;
  border:none;
  color:white;
  text-align:center;
  text-decoration:bold;
  font-family:GARAMOND;
- font-size:14px;
+ font-size:medium;
  display:inline-block;
  margin:2px;
  padding:5px;}
