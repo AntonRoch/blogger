@@ -85,16 +85,16 @@
  cursor:pointer;}
 /***/
 .address{
- height:26px;
+ height:1.5em;
  width:100%;}
 .long{
- height:40px;
+ height:2em;
  width:100%;}
 .longfat{
- height:70px;
+ height:4em;
  width:100%;}
 .longwide{
- height:100px;
+ height:6em;
  width:100%;}
 .cover{
  width:100%;
