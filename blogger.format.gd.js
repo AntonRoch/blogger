@@ -612,7 +612,7 @@ function showVIP(uri, tag, width, nbsp, ava, ancRec, ancData){
     if(vipID>0){//Admin:NotVIP
       var iconURL = (vipID<=numIndexVip1) ? (urlVip1Avatar) : ((vipID<=numIndexVip2) ? (urlVip2Avatar) : (urlVip3Avatar));
       if(!tag){icon = iconURL;}
-      else{icon = nbsp + '<img src="' + iconURL + '" border="0" width="' + width + '"/>';}
+      else{icon = nbsp + '<img src="' + iconURL + '" border="0" width="' + (width*0.75) + '"/>';}
     }
     if(ava){
       var cids = UserVIPs[vipID][8].split(','); //[th][vs][..]
@@ -621,7 +621,7 @@ function showVIP(uri, tag, width, nbsp, ava, ancRec, ancData){
         if(!tag){
           icon += ';' + urlIdAvatars[cid][0];
         }else{
-          icon += nbsp + '<a title="'+urlIdAvatars[cid][1]+'" href="'+cmtUrl+'"><img src="' + urlIdAvatars[cid][0] + '" border="0" width="' + (width*1.25) + '"/></a>';
+          icon += nbsp + '<a title="'+urlIdAvatars[cid][1]+'" href="'+cmtUrl+'"><img src="' + urlIdAvatars[cid][0] + '" border="0" width="' + (width*1) + '"/></a>';
           for(var i=1; i<cids.length; i++){
             cid = cids[i];
             icon += nbsp + '<img title="'+urlIdAvatars[cid][1]+'" src="' + urlIdAvatars[cid][0] + '" border="0" width="' + (width*1) + '"/>';
@@ -843,7 +843,7 @@ function updateCommentContent(tagName, tagClass, tagIdBase, headIdBase, textIdBa
      var comheadid = document.getElementById(headId);
      var comtextid = document.getElementById(textId);
      var cmtnum = ((numCommentPage-1)*numCommentPerPage + index + 1);
-     var mrHead = showVIP(comments[index].authorUrl, 1, 32, ' ', 1, cmtnum, coreId);
+     var mrHead = showVIP(comments[index].authorUrl, 1, 24, ' ', 1, cmtnum, coreId);
      var mrText = getStyledComment(comments[index].authorUrl, '?', comments[index].timestamp, comtextid.innerHTML);
      if(!hideCounter){mrHead = '<A NAME="cmt.'+cmtnum+'"></A><I><FONT COLOR="#FF9966">('+cmtnum+')</FONT></I>' + mrHead;}
      comheadid.innerHTML = mrHead;
@@ -858,7 +858,7 @@ function updateOneCommentHeader(bcId, idPrefix, authorUrl, hideCounter, authorNa
   var cmtnum = ((numCommentPage-1)*numCommentPerPage + CommentsCounter);
   var comheadid = document.getElementById(idPrefix+bcId);
   var comgoid = document.getElementById('cgo-'+bcId);
-  var mrHead = showVIP(authorUrl, 1, 32, ' ', 1, cmtnum, bcId);
+  var mrHead = showVIP(authorUrl, 1, 24, ' ', 1, cmtnum, bcId);
   var cmtid = bcId.split('-')[1]; // bcId:[_cmt-xxxxxx]
   if(!hideCounter){mrHead = '<A NAME="cmt.'+cmtnum+'"></A><I><FONT COLOR="#FF9966">('+cmtnum+')</FONT></I>' + mrHead;}
   comheadid.innerHTML = mrHead;
