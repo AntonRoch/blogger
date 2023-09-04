@@ -770,6 +770,11 @@ function getCommentQuote(author, cmtnum, cmtid){
   var cmtnumRef = getGoToCommentLocation(cmtnum, cmtid);
   return 'Ref: '+author+' <A HREF="'+cmtnumRef+'">('+cmtnum+')</A> \r\n\r\n';
 }
+function openCommentQuote(text,cmtInput='hiddenPostBody',cmtForm='hiddenCommentForm'){
+  //{xuteng}
+  db(cmtInput, text);
+  document[cmtForm].submit();
+}
 function setCommentQuote(text){
   element = document.getElementById(idTextareaCommentPost);
   element.value = text;
@@ -857,7 +862,7 @@ function updateOneCommentHeader(bcId, idPrefix, authorUrl, hideCounter, authorNa
   var cmtid = bcId.split('-')[1]; // bcId:[_cmt-xxxxxx]
   if(!hideCounter){mrHead = '<A NAME="cmt.'+cmtnum+'"></A><I><FONT COLOR="#FF9966">('+cmtnum+')</FONT></I>' + mrHead;}
   comheadid.innerHTML = mrHead;
-  comgoid.innerHTML = '<A HREF="javascript:setCommentQuote(getCommentQuote(\''+authorName.replace(/'/g,"\\'")+'\', '+cmtnum+', \''+cmtid+'\'));"><IMG HEIGHT="12" SRC="https://asinerum-gae.appspot.com/static/button.gif" TITLE="Go comment"/></A>';
+  comgoid.innerHTML = '<A HREF="javascript:openCommentQuote(getCommentQuote(\''+authorName.replace(/'/g,"\\'")+'\', '+cmtnum+', \''+cmtid+'\'));"><IMG HEIGHT="12" SRC="https://asinerum-gae.appspot.com/static/button.gif" TITLE="Go comment"/></A>';
 }
 function updateOneCommentContent(bcId, idPrefix, authorUrl, timestamp){
   var comtextid = document.getElementById(idPrefix+bcId); if(!comtextid)return;

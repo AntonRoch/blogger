@@ -97,6 +97,12 @@ urlIdAvatars['cd'] = [`${iconImageLocation}/i_chuidit.gif`, 'Gi&#7845;y l&#244;,
 urlIdAvatars['tb'] = [`${iconImageLocation}/i_taobon.gif`, 'T&#225;ob&#243;n t&#7915; s&#225;ng t&#7899;i &#273;&#234;m'];
 urlIdAvatars['tv'] = [`${iconImageLocation}/i_tinvit.gif`, 'Chuy&#234;n tung tin v&#7883;t, &#7843;o h&#417;n loa ph&#432;&#7901;ng'];
 urlIdAvatars['tz'] = [`${iconImageLocation}/i_tongzat.gif`, 'Em to&#7885;c: M&#7865;o, M&#225;n, T&#224;y, M&#432;&#7901;ng'];
+urlIdAvatars['dance'] = [`${iconImageLocation}/dance.gif`, 'Guerrilla'];
+urlIdAvatars['fun'] = [`${iconImageLocation}/fun.gif`, 'Actress'];
+urlIdAvatars['hit'] = [`${iconImageLocation}/hit.gif`, 'Policeman'];
+urlIdAvatars['hug'] = [`${iconImageLocation}/hug.gif`, 'Teacher'];
+urlIdAvatars['kiss'] = [`${iconImageLocation}/kiss.gif`, 'Capitalist'];
+urlIdAvatars['laugh'] = [`${iconImageLocation}/laugh.gif`, 'Communist'];
 //
 // Comment-href:
 exPageNames[0] = ['ban-hang', 'Mua-ban', 'Bookstore'];
