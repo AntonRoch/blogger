@@ -153,22 +153,22 @@ String.prototype.youtube=function(vid_stid){
 }
 String.prototype.embedImg=function(width){
   if(!width){width=DEF_IMG_WIDTH;}
-  return('<img width="'+width+'" src="'+this+'"/>');
+  return('<img '+DEF_STYLE+' src="'+this+'"/>');
 }
 String.prototype.embedFacebook=function(width, height){
   if(!width){width=DEF_IMG_WIDTH;}
   if(!height){height=DEF_IMG_HEIGHT;}
-  return('<iframe src="https://www.facebook.com/video/embed?video_id='+this+'" width="'+width+'" height="'+height+'" frameborder="0"></iframe>');
+  return('<iframe width="100%" height="auto" src="https://www.facebook.com/video/embed?video_id='+this+'" frameborder="0"></iframe>');
 }
 String.prototype.embedLiveleak=function(width, height){
   if(!width){width=DEF_IMG_WIDTH;}
   if(!height){height=DEF_IMG_HEIGHT;}
-  return('<iframe width="'+width+'" height="'+height+'" src="https://www.liveleak.com/ll_embed?f='+this+'" frameborder="0" allowfullscreen></iframe>');
+  return('<iframe width="100%" height="auto" src="https://www.itemfix.com/e/'+this+'" frameborder="0" allowfullscreen></iframe>');
 }
 String.prototype.embedYoutube=function(width, height){
   if(!width){width=DEF_IMG_WIDTH;}
   if(!height){height=DEF_IMG_HEIGHT;}
-  return('<embed type="application/x-shockwave-flash" allowscriptaccess="never" src="https://www.youtube.com/v/'+this+'&hl=en_US&fs=1&" width="'+width+'" height="'+height+'"></embed>');
+  return('<embed width="100%" height="auto" type="application/x-shockwave-flash" src="https://www.youtube.com/v/'+this+'&hl=en_US&fs=1&" allowscriptaccess="never"></embed>');
 }
 String.prototype.json2date=function(){
   var jts = this.split('T');

@@ -13,6 +13,7 @@ const iconImageLocation = `${resourcesLocation}/img`;
 //
 var DEF_IMG_WIDTH = 480;
 var DEF_IMG_HEIGHT = 270;
+let DEF_STYLE = 'style="max-width:100%;height:auto"';
 //
 var CommentsCounter = 0;
 var numCommentPerPage = 200;
