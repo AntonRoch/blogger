@@ -50,7 +50,7 @@ Date.prototype.toJDStr=function(){
   return(this.toJSON().split('T')[0]);
 }
 String.prototype.acceptImg=function(){
-  return(this.match(/\.(jpeg|jpg|gif|png)$/i)!=null?true:false);
+  return(this.match(/\.(jpeg|jpg|gif|png|bmp|webp)$/i)!=null?true:false);
 }
 String.prototype.stripTags=function(allowed){
   var input = this;
