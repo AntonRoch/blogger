@@ -539,7 +539,7 @@ function getArchiveIndex(year){
       }
       var published = val.published.$t.split('T')[0];
       var title = val.title.$t;
-      var label = val.category[0].term;
+      var label = val.category ? val.category[0].term : 'nolabel';
       var author = val.author[0].name.$t;
       archive += '{'+posts+'} <a target="_blank" href="'+hrefPost+'">'+title+'</a><br/><span style="color: #FF9900;">'+published+' '+label+'&nbsp;<a href="https://'+window_location_hostname+'/search/label/'+label+'">&raquo;</a></span><br/>';
       posts--;
