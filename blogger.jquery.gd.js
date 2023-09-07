@@ -14,7 +14,8 @@
     {
       $('button').on('click', function(e){
         e.preventDefault();
-        eval('JQFUNCTIONS.runFunc["'+$(this).attr("id")+'"]();');
+        var f = JQFUNCTIONS.runFunc[$(this).attr("id")];
+        if(typeof(f)==='function')f();
       });
     },
      runFunc:
