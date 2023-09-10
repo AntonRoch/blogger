@@ -96,9 +96,14 @@ String.prototype.youtube=function(vid_stid){
     res = res.replaceText('[/facebook]', ']');
   }else if(vid_stid=='liveleak'){
     var stid = 'liveleak=';
-    var vidlen = 12;
+    var vidlen = 6;
     res = res.replaceText('[liveleak]', '[liveleak=');
     res = res.replaceText('[/liveleak]', ']');
+  }else if(vid_stid=='tiktok'){
+    var stid = 'tiktok=';
+    var vidlen = -1;
+    res = res.replaceText('[tiktok]', '[tiktok=');
+    res = res.replaceText('[/tiktok]', ']');
   }else{
     var stid = 'youtube=';
     var vidlen = 11;
@@ -128,12 +133,21 @@ String.prototype.youtube=function(vid_stid){
       }
     }else if(vid_stid=='liveleak'){
       if(vid.length!=vidlen && vid.length!=vidlen+2){
-        vid = vid.substring(vid.indexOf('f=')+2).split('&')[0].split('#')[0].split('<')[0].trim();
+        vid = vid.split('?').pop().split('&')[0].split('=').pop();
       }
       if(vid.length!=vidlen && vid.length!=vidlen+2){
         res = res.replace(matches[i], '(Wrong LiveLeak video embeded)');
       }else{
         res = res.replace(matches[i], vid.embedLiveleak());
+      }
+    }else if(vid_stid=='tiktok'){
+      if(isNaN(vid)){
+        vid = vid.split('?')[0].split('/').pop();
+      }
+      if(isNaN(vid)){
+        res = res.replace(matches[i], '(Wrong Tiktok video embeded)');
+      }else{
+        res = res.replace(matches[i], vid.embedTiktok());
       }
     }else{//YOUTUBE.COM
       if(vid.length!=vidlen){
@@ -169,6 +183,11 @@ String.prototype.embedYoutube=function(width, height){
   if(!width){width=DEF_IMG_WIDTH;}
   if(!height){height=DEF_IMG_HEIGHT;}
   return('<embed width="100%" height="auto" type="application/x-shockwave-flash" src="https://www.youtube.com/v/'+this+'&hl=en_US&fs=1&" allowscriptaccess="never"></embed>');
+}
+String.prototype.embedTiktok=function(width, height){
+  if(!width){width=DEF_IMG_WIDTH;}
+  if(!height){height=DEF_IMG_HEIGHT;}
+  return(`<blockquote class="tiktok-embed" data-video-id="${this}"><section/></blockquote>`);
 }
 String.prototype.json2date=function(){
   var jts = this.split('T');
