@@ -122,40 +122,28 @@ String.prototype.youtube=function(vid_stid){
         res = res.replace(matches[i], vid.embedImg());
       }
     }else if(vid_stid=='facebook'){
-      if(isNaN(vid)){
-        vid = vid.split('v=')[1];
-        if(vid) vid = vid.split('&')[0].split('#')[0].split('<')[0].trim();
-      }
+      vid = vid.split('v=').pop().split('&')[0].split('#')[0].split('<')[0].trim();
       if(isNaN(vid)){
         res = res.replace(matches[i], '(Wrong Facebook video embeded)');
       }else{
         res = res.replace(matches[i], vid.embedFacebook());
       }
     }else if(vid_stid=='liveleak'){
-      if(vid.length!=vidlen && vid.length!=vidlen+2){
-        vid = vid.split('?').pop().split('&')[0].split('=').pop();
-      }
-      if(vid.length!=vidlen && vid.length!=vidlen+2){
+      vid = vid.split('?').pop().split('&')[0].split('=').pop().trim();
+      if(vid.length!=vidlen){
         res = res.replace(matches[i], '(Wrong LiveLeak video embeded)');
       }else{
         res = res.replace(matches[i], vid.embedLiveleak());
       }
     }else if(vid_stid=='tiktok'){
-      if(isNaN(vid)){
-        vid = vid.split('?')[0].split('/').pop();
-      }
+      vid = vid.split('?')[0].split('/').pop().trim();
       if(isNaN(vid)){
         res = res.replace(matches[i], '(Wrong Tiktok video embeded)');
       }else{
         res = res.replace(matches[i], vid.embedTiktok());
       }
     }else{//YOUTUBE.COM
-      if(vid.length!=vidlen){
-        vid = vid.substring(vid.indexOf('v=')+2).split('&')[0].split('#')[0].split('<')[0].trim();
-      }
-      if(vid.length!=vidlen){//YOUTU.BE
-        vid = matches[i].substring(matches[i].lastIndexOf('/')+1).split(epat)[0].split('?')[0].split('<')[0].trim();
-      }
+      vid = vid.split('v=').pop().split('&')[0].split('#')[0].split('<')[0].split('/').pop().trim();
       if(vid.length!=vidlen){
         res = res.replace(matches[i], '(Wrong Youtube video embeded)');
       }else{
@@ -172,7 +160,7 @@ String.prototype.embedImg=function(width){
 String.prototype.embedFacebook=function(width, height){
   if(!width){width=DEF_IMG_WIDTH;}
   if(!height){height=DEF_IMG_HEIGHT;}
-  return('<iframe width="100%" height="auto" src="https://www.facebook.com/video/embed?video_id='+this+'" frameborder="0"></iframe>');
+  return(`<iframe width="100%" height="auto" src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FPlayStation%2Fvideos%2F${this}%2F&show_text=0" allowTransparency="true" allowFullScreen="true"></iframe>`);
 }
 String.prototype.embedLiveleak=function(width, height){
   if(!width){width=DEF_IMG_WIDTH;}
@@ -187,7 +175,7 @@ String.prototype.embedYoutube=function(width, height){
 String.prototype.embedTiktok=function(width, height){
   if(!width){width=DEF_IMG_WIDTH;}
   if(!height){height=DEF_IMG_HEIGHT;}
-  return(`<blockquote class="tiktok-embed" data-video-id="${this}"><section/></blockquote>`);
+  return(`<blockquote class="tiktok-embed" data-video-id="${this}"><section/></blockquote><script async src="https://www.tiktok.com/embed.js"></script>`);
 }
 String.prototype.json2date=function(){
   var jts = this.split('T');
