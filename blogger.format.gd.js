@@ -170,7 +170,7 @@ String.prototype.embedLiveleak=function(width, height){
 String.prototype.embedYoutube=function(width, height){
   if(!width){width=DEF_IMG_WIDTH;}
   if(!height){height=DEF_IMG_HEIGHT;}
-  return('<embed width="100%" height="auto" type="application/x-shockwave-flash" src="https://www.youtube.com/v/'+this+'&hl=en_US&fs=1&" allowscriptaccess="never"></embed>');
+  return(`<iframe width="100%" height="auto" src="https://www.youtube.com/embed/${this}" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture;web-share" allowfullscreen></iframe>`);
 }
 String.prototype.embedTiktok=function(width, height){
   if(!width){width=DEF_IMG_WIDTH;}
