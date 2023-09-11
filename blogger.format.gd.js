@@ -160,22 +160,22 @@ String.prototype.embedImg=function(width){
 String.prototype.embedFacebook=function(width, height){
   if(!width){width=DEF_IMG_WIDTH;}
   if(!height){height=DEF_IMG_HEIGHT;}
-  return(`<iframe width="100%" height="auto" src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FPlayStation%2Fvideos%2F${this}%2F&show_text=0" allowTransparency="true" allowFullScreen="true"></iframe>`);
+  return(`<iframe width="100%" height="auto" src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FPlayStation%2Fvideos%2F${this}%2F&show_text=0" frameborder="0" allowfullscreen></iframe>`);
 }
 String.prototype.embedLiveleak=function(width, height){
   if(!width){width=DEF_IMG_WIDTH;}
   if(!height){height=DEF_IMG_HEIGHT;}
-  return('<iframe width="100%" height="auto" src="https://www.itemfix.com/e/'+this+'" frameborder="0" allowfullscreen></iframe>');
+  return(`<iframe width="100%" height="auto" src="https://www.itemfix.com/e/${this}" frameborder="0" allowfullscreen></iframe>`);
 }
 String.prototype.embedYoutube=function(width, height){
   if(!width){width=DEF_IMG_WIDTH;}
   if(!height){height=DEF_IMG_HEIGHT;}
-  return(`<iframe width="100%" height="auto" src="https://www.youtube.com/embed/${this}" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture;web-share" allowfullscreen></iframe>`);
+  return(`<iframe width="100%" height="auto" src="https://www.youtube.com/embed/${this}" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture;web-share" frameborder="0" allowfullscreen></iframe>`);
 }
 String.prototype.embedTiktok=function(width, height){
   if(!width){width=DEF_IMG_WIDTH;}
   if(!height){height=DEF_IMG_HEIGHT;}
-  return(`<blockquote class="tiktok-embed" data-video-id="${this}"><section/></blockquote>`);
+  return(`<iframe width="100%" height="auto" src="https://www.tiktok.com/embed/v2/${this}?lang=en-US" frameborder="0" allowfullscreen></iframe>`);
 }
 String.prototype.json2date=function(){
   var jts = this.split('T');
