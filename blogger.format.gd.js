@@ -175,7 +175,7 @@ String.prototype.embedYoutube=function(width, height){
 String.prototype.embedTiktok=function(width, height){
   if(!width){width=DEF_IMG_WIDTH;}
   if(!height){height=DEF_IMG_HEIGHT;}
-  return(`<blockquote class="tiktok-embed" data-video-id="${this}"><section/></blockquote><script async src="https://www.tiktok.com/embed.js"></script>`);
+  return(`<blockquote class="tiktok-embed" data-video-id="${this}"><section/></blockquote>`);
 }
 String.prototype.json2date=function(){
   var jts = this.split('T');
