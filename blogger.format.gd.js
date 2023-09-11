@@ -210,6 +210,7 @@ function convertCustomTags(text){
   text = text.youtube();
   text = text.youtube('facebook');
   text = text.youtube('liveleak');
+  text = text.youtube('tiktok');
   text = text.youtube('img');
   text = insertSmiley(text);
   text = convertCustomFontTags(text);
