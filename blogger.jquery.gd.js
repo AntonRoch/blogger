@@ -548,6 +548,33 @@ function getArchiveIndex(year){
     $(divArchive).html(archive);
   });
 }
+function updateBlogPager(blogPager='#blog-pager'){
+  var jdata = JSON.parse(document.querySelector('script[type="application/ld+json"]').innerText);
+  var postTitle = jdata.headline;
+  var postMark = new Date(jdata.datePublished);
+  postMark.setSeconds(postMark.getSeconds()+30);
+  $.getJSON(`https://${window.location.hostname}/feeds/posts/summary?redirect=false&published-max=${postMark.toISOString()}&max-results=25&start-index=1&alt=json-in-script&callback=?`,
+  {tags: 'jquery,javascript', tagmode: 'any', format: 'json'},
+  function(data){
+    var pdated;
+    data.feed.entry.forEach(val=>{
+      if(val.title.$t==postTitle) pdated = new Date(val.published.$t);
+    });
+    data.feed.entry.every(val=>{
+      var title = val.title.$t;
+      var dated = new Date(val.published.$t);
+      if(title!=postTitle && dated.getTime()<pdated.getTime()){
+        var hrefPost = '';
+        for(var i=0; i<val.link.length; i++){
+          if(val.link[i].rel=='alternate') hrefPost = val.link[i].href;
+        }
+        $(blogPager).html(`<a class='blog-pager-older-link flat-button ripple' href='${hrefPost}'>${title}</a>`);
+        return false;
+      };
+      return true;
+    });
+  });
+}
 //
 //////////////////////////////////////////////////
 //
