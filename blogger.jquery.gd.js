@@ -548,7 +548,7 @@ function getArchiveIndex(year){
     $(divArchive).html(archive);
   });
 }
-function updateBlogPager(blogPager='#blog-pager'){
+function updateBlogPager(blogPager='#blog-pager',linkTitle=null){
   var jdata = JSON.parse(document.querySelector('script[type="application/ld+json"]').innerText);
   var postTitle = jdata.headline;
   var postMark = new Date(jdata.datePublished);
@@ -568,7 +568,7 @@ function updateBlogPager(blogPager='#blog-pager'){
         for(var i=0; i<val.link.length; i++){
           if(val.link[i].rel=='alternate') hrefPost = val.link[i].href;
         }
-        $(blogPager).html(`<a class='blog-pager-older-link flat-button ripple' href='${hrefPost}'>${title}</a>`);
+        $(blogPager).html(`<a class='blog-pager-older-link flat-button ripple' href='${hrefPost}'>${linkTitle?linkTitle:title}</a>`);
         return false;
       };
       return true;
