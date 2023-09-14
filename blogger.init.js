@@ -28,6 +28,13 @@ function getRecentComments01(host, sdiv) {
   timedCount(false);
 }
 
+function getRecentComments02(sdiv){
+  getRecentCommentsFull(null, 50, 4096, "[user] [title] ([date])", true, false, sdiv);
+  timer_is_on = 1;
+  setCookie(cookieName, 1, cookieDays);
+  timedCount(false);
+}
+
 function clearRecentComments01(sdiv) {
   sdiv = sdiv || "divRecentCommentsLong";
   getRecentCommentsButton(false);
