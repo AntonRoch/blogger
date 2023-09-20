@@ -526,11 +526,17 @@ function getArchiveIndex(year){
   var published_min = year+'-01-01T00:00:00%2B'+timezone;
   var published_max = year+'-12-31T23:59:59%2B'+timezone;
   var divArchive = '#divArchive'+year;
+  if($(divArchive).html()){
+    return $(divArchive).html('');
+  }
   $(divArchive).html('<img src="https://asinerum-gae.appspot.com/static/icon_loading.gif">');
   $.getJSON(
   'https://'+window_location_hostname+'/feeds/posts/summary?redirect=false&published-min='+published_min+'&published-max='+published_max+'&max-results=200&start-index=1&alt=json-in-script&callback=?',
   {tags: 'jquery,javascript', tagmode: 'any', format: 'json'},
   function(data){
+    if(!data.feed.entry){
+      return $(divArchive).html('{empty}');
+    }
     var archive = '<br/>';
     var posts = data.feed.entry.length;
     $.each(data.feed.entry, function(key,val){
@@ -556,7 +562,7 @@ function updateBlogPager(blogPager='#blog-pager',linkTitle=null){
   $.getJSON(`https://${window.location.hostname}/feeds/posts/summary?redirect=false&published-max=${postMark.toISOString()}&max-results=25&start-index=1&alt=json-in-script&callback=?`,
   {tags: 'jquery,javascript', tagmode: 'any', format: 'json'},
   function(data){
-    var pdated;
+    var pdated = new Date(0);
     data.feed.entry.forEach(val=>{
       if(val.title.$t==postTitle) pdated = new Date(val.published.$t);
     });
