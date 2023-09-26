@@ -104,6 +104,10 @@ urlIdAvatars['hit'] = [`${iconImageLocation}/hit.gif`, 'Policeman'];
 urlIdAvatars['hug'] = [`${iconImageLocation}/hug.gif`, 'Teacher'];
 urlIdAvatars['kiss'] = [`${iconImageLocation}/kiss.gif`, 'Capitalist'];
 urlIdAvatars['laugh'] = [`${iconImageLocation}/laugh.gif`, 'Communist'];
+urlIdAvatars['think'] = [`${iconImageLocation}/think.gif`, 'Wanking Netizen'];
+urlIdAvatars['ship'] = [`${iconImageLocation}/ship.gif`, 'Shipping Biker'];
+urlIdAvatars['show'] = [`${iconImageLocation}/show.gif`, 'Fucking Bastard'];
+urlIdAvatars['ride'] = [`${iconImageLocation}/ride.gif`, 'Homeless Wanderer'];
 //
 // Comment-href:
 exPageNames[0] = ['ban-hang', 'Mua-ban', 'Bookstore'];
@@ -134,5 +138,9 @@ iCommentSmileys['*hit*'] = [`<img src="${iconImageLocation}/hit.gif" border="0"/
 iCommentSmileys['*hug*'] = [`<img src="${iconImageLocation}/hug.gif" border="0"/>`];
 iCommentSmileys['*kiss*'] = [`<img src="${iconImageLocation}/kiss.gif" border="0"/>`];
 iCommentSmileys['*laugh*'] = [`<img src="${iconImageLocation}/laugh.gif" border="0"/>`];
+iCommentSmileys['*think*'] = [`<img src="${iconImageLocation}/think.gif" border="0"/>`];
+iCommentSmileys['*ship*'] = [`<img src="${iconImageLocation}/ship.gif" border="0"/>`];
+iCommentSmileys['*show*'] = [`<img src="${iconImageLocation}/show.gif" border="0"/>`];
+iCommentSmileys['*ride*'] = [`<img src="${iconImageLocation}/ride.gif" border="0"/>`];
 //
 //////////////////////////////////////////////////
