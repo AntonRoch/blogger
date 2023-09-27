@@ -98,16 +98,16 @@ urlIdAvatars['cd'] = [`${iconImageLocation}/i_chuidit.gif`, 'Gi&#7845;y l&#244;,
 urlIdAvatars['tb'] = [`${iconImageLocation}/i_taobon.gif`, 'T&#225;ob&#243;n t&#7915; s&#225;ng t&#7899;i &#273;&#234;m'];
 urlIdAvatars['tv'] = [`${iconImageLocation}/i_tinvit.gif`, 'Chuy&#234;n tung tin v&#7883;t, &#7843;o h&#417;n loa ph&#432;&#7901;ng'];
 urlIdAvatars['tz'] = [`${iconImageLocation}/i_tongzat.gif`, 'Em to&#7885;c: M&#7865;o, M&#225;n, T&#224;y, M&#432;&#7901;ng'];
-urlIdAvatars['dance'] = [`${iconImageLocation}/dance.gif`, 'Guerrilla'];
-urlIdAvatars['fun'] = [`${iconImageLocation}/fun.gif`, 'Actress'];
-urlIdAvatars['hit'] = [`${iconImageLocation}/hit.gif`, 'Policeman'];
-urlIdAvatars['hug'] = [`${iconImageLocation}/hug.gif`, 'Teacher'];
-urlIdAvatars['kiss'] = [`${iconImageLocation}/kiss.gif`, 'Capitalist'];
-urlIdAvatars['laugh'] = [`${iconImageLocation}/laugh.gif`, 'Communist'];
-urlIdAvatars['think'] = [`${iconImageLocation}/think.gif`, 'Wanking Netizen'];
-urlIdAvatars['ship'] = [`${iconImageLocation}/ship.gif`, 'Shipping Biker'];
-urlIdAvatars['show'] = [`${iconImageLocation}/show.gif`, 'Fucking Bastard'];
-urlIdAvatars['ride'] = [`${iconImageLocation}/ride.gif`, 'Homeless Wanderer'];
+urlIdAvatars['dance'] = [`${iconImageLocation}/dance.gif`, 'Guerrilla: Zuk&#237;ch Chim B&#432;&#417;ng'];
+urlIdAvatars['fun'] = [`${iconImageLocation}/fun.gif`, 'Actress: V&#361; C&#244;ng V&#250; B&#7921;'];
+urlIdAvatars['hit'] = [`${iconImageLocation}/hit.gif`, 'Policeman: Daoph&#7911; C&#7843;nhbinh'];
+urlIdAvatars['hug'] = [`${iconImageLocation}/hug.gif`, 'Teacher: Gi&#225;o Gi&#7843;ng Tr&#432;&#7901;ng L&#224;ng'];
+urlIdAvatars['kiss'] = [`${iconImageLocation}/kiss.gif`, 'Capitalist: T&#432;b&#7843;n S&#224;ilang'];
+urlIdAvatars['laugh'] = [`${iconImageLocation}/laugh.gif`, 'Communist: D&#7843;ngvi&#234;n Ho&#224;nt&#7909;c'];
+urlIdAvatars['think'] = [`${iconImageLocation}/think.gif`, 'Wanking Netizen: Trai T&#226;n S&#243;c L&#7885;'];
+urlIdAvatars['ship'] = [`${iconImageLocation}/ship.gif`, 'Shipping Biker: Ch&#7841;y Ch&#7907; Xe &#212;m'];
+urlIdAvatars['show'] = [`${iconImageLocation}/show.gif`, 'Fucking Bastard: S&#7871;p Nh&#7899;n H&#7871;t X&#232;ng'];
+urlIdAvatars['ride'] = [`${iconImageLocation}/ride.gif`, 'Homeless Wanderer: Langthang Kh&#244;ng Nh&#224; Kh&#244;ng C&#7917;a'];
 //
 // Comment-href:
 exPageNames[0] = ['ban-hang', 'Mua-ban', 'Bookstore'];
