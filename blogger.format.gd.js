@@ -143,7 +143,7 @@ String.prototype.youtube=function(vid_stid){
         res = res.replace(matches[i], vid.embedTiktok());
       }
     }else{//YOUTUBE.COM
-      vid = vid.split('v=').pop().split('&')[0].split('#')[0].split('<')[0].split('/').pop().trim();
+      vid = vid.split('v=').pop().split('&')[0].split('#')[0].split('<')[0].split('/').pop().split('?')[0].trim();
       if(vid.length!=vidlen){
         res = res.replace(matches[i], '(Wrong Youtube video embeded)');
       }else{
