@@ -515,7 +515,7 @@ function showArchiveOption(){
   var thisyear = thisday.getFullYear();
   var startyear = 2008;
   for(var i=thisyear; i>=startyear; i--){
-    document.write('<input type="image" src="https://asinerum-gae.appspot.com/static/icon_go.gif" onclick="getArchiveIndex('+i+');"/>\r\n'+i+'<br/>');
+    document.write('<input type="image" src="https://cdn.jsdelivr.net/gh/asinerum/project/team/gui/icon_go.gif" onclick="getArchiveIndex('+i+');"/>\r\n'+i+'<br/>');
     document.write('<div class="bwa-archive" id="divArchive'+i+'"></div><br/>');
   }
 }
@@ -529,7 +529,7 @@ function getArchiveIndex(year){
   if($(divArchive).html()){
     return $(divArchive).html('');
   }
-  $(divArchive).html('<img src="https://asinerum-gae.appspot.com/static/icon_loading.gif">');
+  $(divArchive).html('<img src="https://cdn.jsdelivr.net/gh/asinerum/project/team/gui/icon_loading.gif">');
   $.getJSON(
   'https://'+window_location_hostname+'/feeds/posts/summary?redirect=false&published-min='+published_min+'&published-max='+published_max+'&max-results=200&start-index=1&alt=json-in-script&callback=?',
   {tags: 'jquery,javascript', tagmode: 'any', format: 'json'},
