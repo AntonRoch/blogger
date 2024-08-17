@@ -861,6 +861,15 @@ function updateCommentContent(tagName, tagClass, tagIdBase, headIdBase, textIdBa
 ////
 // V2014.010A:
 ////
+function copytext(text) {
+  var temp = document.createElement('input');
+  temp.value = text;
+  document.body.appendChild(temp);
+  temp.select();
+  document.execCommand('copy');
+  document.body.removeChild(temp);
+  console.log('COPIED:',temp.value);
+}
 function updateOneCommentHeader(bcId, idPrefix, authorUrl, hideCounter, authorName){
   CommentsCounter++;
   var cmtnum = ((numCommentPage-1)*numCommentPerPage + CommentsCounter);
@@ -870,7 +879,8 @@ function updateOneCommentHeader(bcId, idPrefix, authorUrl, hideCounter, authorNa
   var cmtid = bcId.split('-')[1]; // bcId:[_cmt-xxxxxx]
   if(!hideCounter){mrHead = '<A NAME="cmt.'+cmtnum+'"></A><I><FONT COLOR="#FF9966">('+cmtnum+')</FONT></I>' + mrHead;}
   comheadid.innerHTML = mrHead;
-  comgoid.innerHTML = '<A HREF="javascript:openCommentQuote(getCommentQuote(\''+authorName.replace(/'/g,"\\'")+'\', '+cmtnum+', \''+cmtid+'\'));"><IMG HEIGHT="12" SRC="https://cdn.jsdelivr.net/gh/asinerum/project/team/gui/button.gif" TITLE="Go comment"/></A>';
+  var quote = `getCommentQuote(decodeURI('${authorName}'),${cmtnum},'${cmtid}')`;
+  comgoid.innerHTML = `<A HREF="javascript:copytext(${quote});openCommentQuote(${quote})"><IMG HEIGHT="12" SRC="https://cdn.jsdelivr.net/gh/asinerum/project/team/gui/button.gif" TITLE="Go comment"/></A>`;
 }
 function updateOneCommentContent(bcId, idPrefix, authorUrl, timestamp){
   var comtextid = document.getElementById(idPrefix+bcId); if(!comtextid)return;
