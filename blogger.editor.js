@@ -1,6 +1,6 @@
 // For updateOneCommentHeader()
 
-function editorInit(config={}, note='#summernote'){
+function editorInit(config={dialogsInBody:true}, note='#summernote'){
   $(document).ready(function(){
     $(note).summernote(config);
   });
