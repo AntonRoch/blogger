@@ -265,7 +265,7 @@ function convertCustomFontTags(text){
   text = text.replaceText('[fim]', '<img src="');
   text = text.replaceText('[/fim]', '"/>');
   text = text.replaceText('[ifr]', '<iframe src="');
-  text = text.replaceText('[/ifr]', '"/>');
+  text = text.replaceText('[/ifr]', '"></iframe>');
   text = text.replaceText('[u]', '<u>');
   text = text.replaceText('[/u]', '</u>');
   text = text.replaceText('[li]', '<li>');
