@@ -1,4 +1,4 @@
-String.prototype.escapebreaks = function(){return(this.replace(/<\/?p>/gi,'\n\n').replace(/<br\s*\/?>/gi,'\n'))}
+String.prototype.escapebreaks = function(){return(this.replace(/<\/?p>/gi,'\n').replace(/<br\s*\/?>/gi,'\n').replace(/(\r?\n|\r){3,}/g,'\n\n'))}
 
 function editorInit(config={dialogsInBody:true}, note='#summernote'){
   $(document).ready(function(){
@@ -38,7 +38,7 @@ function editorParseCode(nobreaks=true, note='#summernote'){
   if(nobreaks){
     comment = comment.escapebreaks();
   }
-  copytext(comment);
+  copytext(comment.trim());
   openBloggerPostCommentPage();
 }
 
