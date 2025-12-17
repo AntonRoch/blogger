@@ -264,6 +264,8 @@ function clearAllSpeakings(text){
 function convertCustomFontTags(text){
   text = text.replaceText('[fim]', '<img src="');
   text = text.replaceText('[/fim]', '"/>');
+  text = text.replaceText('[ifr]', '<iframe src="');
+  text = text.replaceText('[/ifr]', '"/>');
   text = text.replaceText('[u]', '<u>');
   text = text.replaceText('[/u]', '</u>');
   text = text.replaceText('[li]', '<li>');
@@ -312,9 +314,11 @@ function clearCustomTags(text){
   text = text.clearText('[im]');
   text = text.clearText('[img]');
   text = text.clearText('[fim]');
+  text = text.clearText('[ifr]');
   text = text.clearText('[/im]');
   text = text.clearText('[/img]');
   text = text.clearText('[/fim]');
+  text = text.clearText('[/ifr]');
   text = text.clearText('[u]');
   text = text.clearText('[/u]');
   text = text.clearText('[li]');
@@ -395,6 +399,7 @@ String.prototype.html2cmt=function(){
   ////
   code = code.tag2cmtEx("font", "]", "", "[fo:", "[/fo]", "(zise|color|face|class)");
   code = code.tag2cmtEx("img", "[/fim]", "src", "[fim]", "", "(src|width|height|border)");
+  code = code.tag2cmtEx("iframe", "[/ifr]", "src", "[ifr]", "", "(src|width|height|frameborder)");
   code = code.tag2cmtEx("span", "]", "style", "[ss:", "[/ss]");
   code = code.tag2cmtEx("div", "]", "align", "[al=", "[/al]");
   code = code.tag2cmtEx("div", "]", "class", "[dc=", "[/dc]");//OBS
