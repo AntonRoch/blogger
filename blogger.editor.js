@@ -1,4 +1,4 @@
-// For updateOneCommentHeader()
+String.prototype.escapebreaks = function(){return(this.replace(/<\/?p>/gi,'\n\n').replace(/<br\s*\/?>/gi,'\n'))}
 
 function editorInit(config={dialogsInBody:true}, note='#summernote'){
   $(document).ready(function(){
@@ -32,9 +32,13 @@ function openBloggerPostCommentPage(){
 }
 
 // Using global html2cmt() and copytext(text)
-function editorParseCode(note='#summernote'){
+function editorParseCode(nobreaks=true, note='#summernote'){
   var commentCode = editorGetCode(note);
-  copytext(commentCode.html2cmt());
+  comment = commentCode.html2cmt();
+  if(nobreaks){
+    comment = comment.escapebreaks();
+  }
+  copytext(comment);
   openBloggerPostCommentPage();
 }
 
