@@ -870,7 +870,7 @@ function copytext(text) {
   document.body.removeChild(temp);
   console.log('COPIED:',temp.value);
 }
-function updateOneCommentHeader(bcId, idPrefix, authorUrl, hideCounter, authorName){
+function updateOneCommentHeader(bcId, idPrefix, authorUrl, hideCounter, authorName, editor=false){
   CommentsCounter++;
   var cmtnum = ((numCommentPage-1)*numCommentPerPage + CommentsCounter);
   var comheadid = document.getElementById(idPrefix+bcId);
@@ -880,7 +880,15 @@ function updateOneCommentHeader(bcId, idPrefix, authorUrl, hideCounter, authorNa
   if(!hideCounter){mrHead = '<A NAME="cmt.'+cmtnum+'"></A><I><FONT COLOR="#FF9966">('+cmtnum+')</FONT></I>' + mrHead;}
   comheadid.innerHTML = mrHead;
   var quote = `getCommentQuote(decodeURI('${authorName}'),${cmtnum},'${cmtid}')`;
-  comgoid.innerHTML = `<A HREF="javascript:copytext(${quote});openCommentQuote(${quote})"><IMG HEIGHT="12" SRC="https://cdn.jsdelivr.net/gh/asinerum/project/team/gui/button.gif" TITLE="Go comment"/></A>`;
+  var gocmt = `<IMG HEIGHT="12" SRC="https://cdn.jsdelivr.net/gh/asinerum/project/team/gui/button.gif" TITLE="Go comment"/>`
+  if(editor)
+    comgoid.innerHTML = `<A HREF="javascript:quot=${quote};copytext(quot);editorSetCode(quot);editorSetFocus()">${gocmt}</A>`;
+  else{
+    comgoid.innerHTML = `<A HREF="javascript:copytext(${quote});openCommentQuote(${quote})">${gocmt}</A>`;
+  }
+}
+function updateOneCommentHeader2(bcId, idPrefix, authorUrl, hideCounter, authorName){
+  updateOneCommentHeader(bcId, idPrefix, authorUrl, hideCounter, authorName, true)
 }
 function updateOneCommentContent(bcId, idPrefix, authorUrl, timestamp){
   var comtextid = document.getElementById(idPrefix+bcId); if(!comtextid)return;
@@ -893,7 +901,8 @@ function updateOneBloggerComment(bcId, idPrefix){
   var authorName = comid.getAttribute('authorName');
   var timestamp = comid.getAttribute('timestamp');
   if(!DEF_HIDE_STAMPS){
-    updateOneCommentHeader(bcId, 'is-', authorUrl, DEF_HIDE_COUNTS, authorName);
+    func = typeof(DEF_USE_BUILTIN_EDITOR)==='undefined' ? updateOneCommentHeader : updateOneCommentHeader2;
+    func(bcId, 'is-', authorUrl, DEF_HIDE_COUNTS, authorName);
   }
   updateOneCommentContent(bcId, 'ss-', authorUrl, timestamp);
 }

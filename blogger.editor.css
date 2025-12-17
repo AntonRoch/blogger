@@ -1,0 +1,38 @@
+#comment-wrapper {
+  border: 1px solid #ccc;
+  padding: 15px;
+  background: #fafafa;
+  margin-bottom: 20px;
+}
+
+#editor-tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+#editor-tabs button {
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+#wysiwyg-editor, #markdown-editor, #preview {
+  width: 100%;
+  min-height: 150px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  background: white;
+  margin-bottom: 10px;
+}
+
+#wysiwyg-editor {
+  outline: none;
+}
+
+#preview {
+  background: #f0f0f0;
+}
+
+#blogger-comment-form {
+  display: none;
+}
