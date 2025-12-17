@@ -884,7 +884,7 @@ function updateOneCommentHeader(bcId, idPrefix, authorUrl, hideCounter, authorNa
   if(editor)
     comgoid.innerHTML = `<A HREF="javascript:quot=${quote};copytext(quot);editorSetCode(quot);editorSetFocus()">${gocmt}</A>`;
   else{
-    comgoid.innerHTML = `<A HREF="javascript:copytext(${quote});openCommentQuote(${quote})">${gocmt}</A>`;
+    comgoid.innerHTML = `<A HREF="javascript:quot=${quote};copytext(quot);openCommentQuote(quot)">${gocmt}</A>`;
   }
 }
 function updateOneCommentHeader2(bcId, idPrefix, authorUrl, hideCounter, authorName){
