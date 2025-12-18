@@ -866,14 +866,22 @@ function updateCommentContent(tagName, tagClass, tagIdBase, headIdBase, textIdBa
 ////
 // V2014.010A:
 ////
-function copytext(text) {
-  var temp = document.createElement('input');
-  temp.value = text;
-  document.body.appendChild(temp);
-  temp.select();
-  document.execCommand('copy');
-  document.body.removeChild(temp);
-  console.log('COPIED:',temp.value);
+function copytext(text){
+  const temporaryTextArea = document.createElement('textarea');
+  temporaryTextArea.value = text;
+  temporaryTextArea.style.position = 'fixed';
+  temporaryTextArea.style.height = '0';
+  temporaryTextArea.style.opacity = '0';
+  document.body.appendChild(temporaryTextArea);
+  temporaryTextArea.select();
+  try{
+    document.execCommand('copy');
+    console.log('COPIED:', temporaryTextArea.value);
+  }catch(err){
+    console.error('COPY FAILED:', err);
+  }finally{
+    document.body.removeChild(temporaryTextArea);
+  }
 }
 function updateOneCommentHeader(bcId, idPrefix, authorUrl, hideCounter, authorName, editor=false){
   CommentsCounter++;
