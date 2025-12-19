@@ -35,9 +35,6 @@ function openBloggerPostCommentPage(){
 function editorParseCode(nobreaks=true, note='#summernote'){
   var commentCode = editorGetCode(note);
   comment = commentCode.html2cmt();
-  if(nobreaks){
-    comment = comment.escapebreaks();
-  }
   copytext(comment.trim());
   openBloggerPostCommentPage();
 }

@@ -212,7 +212,7 @@ function clearCustomTags(text){//25
 }
 String.prototype.cmt2html = function(){return(convertCustomTags(this))}//25
 String.prototype.html2cmt = function(){//25
-  return(escapeTags(this.stripTags(sDefAllowedTagList+sMoreAllowedTagList)).trim());
+  return(escapeTags(this.escapebreaks().stripTags(sDefAllowedTagList+sMoreAllowedTagList)).trim());
 }
 String.prototype.tag2tag = function(tagName, aName1, allowedAttr){
   var hiddenElement = document.createElement("hiddenDivEx");
