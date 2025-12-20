@@ -24,7 +24,7 @@ function getBloggerPostID(){
 }
 
 function getBloggerPostCommentURL(){
-  return `https://www.blogger.com/comment/fullpage/post/${getBloggerBlogID()}/${getBloggerPostID()}`;
+  return `https://www.blogger.com/comment/frame/${getBloggerBlogID()}?po=${getBloggerPostID()}`;
 }
 
 function openBloggerPostCommentPage(){
@@ -45,4 +45,13 @@ function editorSetCode(code='', note='#summernote'){
 
 function editorSetFocus(note='.note-editable'){
   $(note).trigger('focus');
+}
+
+function checkImage(url){
+  return new Promise((resolve)=>{
+    const img = new Image();
+    img.onload=()=>{resolve(true)};
+    img.onerror=()=>{resolve(false)};
+    img.src = url;
+  });
 }
