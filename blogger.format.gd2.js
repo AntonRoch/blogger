@@ -52,7 +52,7 @@ Date.prototype.toJDStr = function(){
 String.prototype.acceptImg = function(){//25
   return(this.match(regimg())!=null);
 }
-String.prototype.stripTags = function(allowed){//25
+String.prototype.stripTags = function(allowed=sDefAllowedTagList+sMoreAllowedTagList){//25
   var input = this;
   allowed = (((allowed||"")+"").toLowerCase().match(/<[a-z][a-z0-9]*>/g)||[]).join('');
   var tags = /<\/?([a-z][a-z0-9]*)\b[^>]*>/gi;
@@ -203,16 +203,14 @@ function convertCustomTags(text){//25:cmt2html
   return(text);
 }
 function convertCustomFontTags(text){//25
-  text = revertTags(text);
-  text = cleanTags(text);
-  return(text);
+  return(cleanTags(revertTags(text).stripTags()));
 }
 function clearCustomTags(text){//25
   return(text.clearcode());
 }
 String.prototype.cmt2html = function(){return(convertCustomTags(this))}//25
 String.prototype.html2cmt = function(){//25
-  return(escapeTags(this.escapebreaks().stripTags(sDefAllowedTagList+sMoreAllowedTagList)).trim());
+  return(escapeTags(this.escapebreaks().stripTags()).trim());
 }
 String.prototype.tag2tag = function(tagName, aName1, allowedAttr){
   var hiddenElement = document.createElement("hiddenDivEx");
