@@ -43,6 +43,12 @@ function sortObject(Objs, rev, back){
 String.prototype.trim = function(){
   return(this.replace(/^\s+|\s+$/g,""));
 }
+String.prototype.include = function(pat){
+  return(this.toLowerCase().split(',').includes(pat.toLowerCase()));
+}
+String.prototype.in = function(pat){
+  return(pat.toLowerCase().split(',').includes(this.toLowerCase()));
+}
 Date.prototype.addDays = function(days){
   return(this.setDate(this.getDate()+days));
 }
@@ -79,38 +85,35 @@ String.prototype.replaceText = function(replaceWhat, replaceTo, exp='gi'){//25
 String.prototype.clearText = function(clearWhat, exp='gi'){//25
   return(this.replaceText(clearWhat, '', exp));
 }
-String.prototype.youtube = function(vid_stid){//25
+String.prototype.youtube = function(vid_stid='youtube'){//25
   var res = this;
-  if(vid_stid=='img'){
-    var stid = 'img=';
+  if(vid_stid.in('img,image')){
     var vidlen = -1;
   }else if(vid_stid=='facebook'){
-    var stid = 'facebook=';
     var vidlen = -1;
     res = res.replaceText('[facebook]', '[facebook=');
     res = res.replaceText('[/facebook]', ']');
   }else if(vid_stid=='liveleak'){
-    var stid = 'liveleak=';
     var vidlen = 6;
     res = res.replaceText('[liveleak]', '[liveleak=');
     res = res.replaceText('[/liveleak]', ']');
   }else if(vid_stid=='tiktok'){
-    var stid = 'tiktok=';
     var vidlen = -1;
     res = res.replaceText('[tiktok]', '[tiktok=');
     res = res.replaceText('[/tiktok]', ']');
   }else{
-    var stid = 'youtube=';
+    vid_stid = 'youtube';
     var vidlen = 11;
     res = res.replaceText('[youtube]', '[youtube=');
     res = res.replaceText('[/youtube]', ']');
   }
+  var stid = vid_stid+'=';
   var bpat = '[';
   var epat = ']';
   var matches = res.gmatch(bpat, epat, stid);
   for(var i=0; i<matches.length; i++){
     var vid = matches[i].substring(matches[i].indexOf('=')+1).split(epat)[0].trim();
-    if(vid_stid=='img'){
+    if(vid_stid.in('img,image')){
       if(!vid.acceptImg()){
         res = res.replace(matches[i], '(Wrong image embeded)');
       }else{
@@ -197,6 +200,7 @@ function convertCustomTags(text){//25:cmt2html
   text = text.youtube('facebook');
   text = text.youtube('liveleak');
   text = text.youtube('tiktok');
+  text = text.youtube('image');
   text = text.youtube('img');
   text = insertSmiley(text);
   text = convertCustomFontTags(text);
@@ -696,6 +700,7 @@ const revertXTags = function(text){
   text = text.xrevtag('im', '<img src="', '"/>');
   text = text.xrevtag('img', '<img src="', '"/>');
   text = text.xrevtag('fim', '<img src="', '"/>');
+  text = text.xrevtag('image', '<img src="', '"/>');
   text = text.xrevtag('ifr', '<iframe src="', '"></iframe>');
   text = text.xrevtag('ac', '<div align=center>', '</div>');
   text = text.xrevtag('ar', '<div align=right>', '</div>');
