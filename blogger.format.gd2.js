@@ -720,8 +720,8 @@ const cleanTags = function(text, tagattrs=tagAllowedAttributes){
   return text;
 }
 const escapeTags = function(text, longs=standardLongTags, shorts=standardShortTags){
-  shorts.split(',').forEach(tag=>{text=text.shortreptag(tag, tag)});
   longs.split(',').forEach(tag=>{text=text.longreptag(tag, tag)});
+  shorts.split(',').forEach(tag=>{text=text.shortreptag(tag, tag)});
   return text;
 }
 //

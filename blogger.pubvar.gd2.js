@@ -1,7 +1,7 @@
 ﻿//////////////////////////////////////////////////
 //
-const standardLongTags = 'img,font,span,div,table,iframe';
-const standardShortTags = 'p,u,li,ol,ul,sup,sub,blockquote,hr,pre,tbody,tr,td';
+const standardLongTags = 'iframe,table,font,span,div,img';
+const standardShortTags = 'blockquote,tbody,pre,sub,sup,hr,li,ol,td,tr,ul,p,u';
 const imgAllowedFormats = '(jpeg|jpg|gif|png|bmp|webp|avif)';
 const tagAllowedAttributes = {
   img: '(src|width|height|border|id)',
