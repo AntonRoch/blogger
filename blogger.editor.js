@@ -47,10 +47,11 @@ function openBloggerPostCommentFrame(){
 }
 
 // Using global html2cmt() and copytext(text)
-function editorParseCode(nobreaks=true, note='#summernote'){
+function editorParseCode(linefeed=true, note='#summernote'){
   var commentCode = editorGetCode(note);
   comment = commentCode.html2cmt();
-  copytext(comment.trim());
+  var feed = linefeed ? '\n' : '';
+  copytext(feed + comment.trim());
   openBloggerPostCommentFrame();
 }
 
