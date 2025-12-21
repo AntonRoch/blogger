@@ -229,11 +229,6 @@ String.prototype.tag2tag = function(tagName, aName1, allowedAttr){
     }
     var style = tags[i].getAttribute("style");
     if((style)&&(style.match(/behavior/i))){tags[i].setAttribute("style",style.replace(/behavior/gi,"scr"));}//MSIE.BUG
-    if(tagName=="font" && autoResizeCommentFont){
-      var fsize = tags[i].getAttribute("zise");
-      if(Number(fsize)>nFontSizeMax){tags[i].setAttribute("zise",nFontSizeMin);}
-      if(Number(fsize)<nFontSizeMin){tags[i].setAttribute("zise",nFontSizeMax-1);}
-    }
     for(var j=0; j<tags[i].attributes.length; j++){
       var aaName = tags[i].attributes[j].name.toLowerCase();
       if(((aName1)&&(aaName!=aName1))||((!aName1)&&(!allowedAttr.match(aaName)))){tags[i].removeAttribute(aaName);}
