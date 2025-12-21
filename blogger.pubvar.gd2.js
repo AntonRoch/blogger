@@ -15,13 +15,15 @@ const regtag = function(tag, scope='gi'){return new RegExp(`<${tag}\\s*([^>]*)>(
 const regimgtag = function(scope='gi'){return new RegExp(`<img\\b[^>]*src\\s*=\\s*["']([^"']*)["'][^>]*>`, scope)}
 const reglonetag = function(tag, scope='gi'){return new RegExp(`<${tag}\\s*([^>]*)/>`, scope)}
 const reglonetag2 = function(tag, scope='gi'){return new RegExp(`<${tag}\\s*([^>]*)>`, scope)}
+const regp = function(scope='gi'){return new RegExp(`<p(\\s+(style|align|class)\\s*=\\s*["']([^"']*)["'][^>]*)>([\\w\\W]*?)<\\/p>`, scope)}
 String.prototype.reptag = function(oldtag, newtag, omark='[', cmark=']'){return this.replace(regtag(oldtag), `${omark}${newtag}${cmark}$2${omark}/${newtag}${cmark}`)}
 String.prototype.reptagex = function(oldtag, newtag, omark='[', cmark=']'){return this.replace(regtag(oldtag), `${omark}${newtag} $1${cmark}$2${omark}/${newtag}${cmark}`)}
 String.prototype.repimgtag = function(){return this.replace(regimgtag(), `[img=$1]`)}
 String.prototype.replonetag = function(oldtag, newtag, omark='[', cmark=']'){rep=function(text,func){return(text.replace(func(oldtag),`${omark}${newtag} $1${cmark}${omark}/${newtag}${cmark}`))};return(rep(rep(this,reglonetag),reglonetag2))}
-String.prototype.nicetag = function(){return this.replace(/<[^>]+>/g,function(tag){return(tag.replace(/(\s+[a-zA-Z-]+)=([^\s"'>]+)/g,'$1="$2"').replace(/(\s+[a-zA-Z-]+)='([^']*)'/g,'$1="$2"').replace(/\&quot\;/gi,"'"))})}
-String.prototype.longreptag = function(oldtag, newtag){return this.nicetag().repimgtag().reptagex(oldtag,newtag).replonetag(oldtag,newtag)}
-String.prototype.shortreptag = function(oldtag, newtag){return this.nicetag().repimgtag().reptag(oldtag,newtag).replonetag(oldtag,newtag)}
+String.prototype.nicetag = function(){return this.replace(/<[^>]+>/g,function(tag){return(tag.replace(/(\s+[a-zA-Z-]+)=([^\s"'>]+)/g,'$1="$2"').replace(/(\s+[a-zA-Z-]+)='([^']*)'/g,'$1="$2"').replace(/\&quot;/gi,"'"))})}
+String.prototype.nicep = function(){return this.replace(regp(), '<div$1></div>')}
+String.prototype.longreptag = function(oldtag, newtag){return this.nicetag().nicep().repimgtag().reptagex(oldtag,newtag).replonetag(oldtag,newtag)}
+String.prototype.shortreptag = function(oldtag, newtag){return this.nicetag().nicep().repimgtag().reptag(oldtag,newtag).replonetag(oldtag,newtag)}
 const regrev = function(tag, spec='', scope='gi', omark='\\[', cmark='\\]'){return new RegExp(`${omark}${tag}${spec}\\s*([^${cmark}]*)${cmark}([\\w\\W]*?)${omark}\\/${tag}${cmark}`, scope)}
 const regsrev = function(tag, scope='gi', omark='\\[', cmark='\\]'){return new RegExp(`${omark}${tag}\\s*${cmark}([\\w\\W]*?)${omark}\\/${tag}${cmark}`, scope)}
 const regsxrev = function(tag, spec='', scope='gi', omark='\\[', cmark='\\]'){return new RegExp(`${omark}${tag}${spec}\\s*([^${cmark}]*)${cmark}`, scope)}
