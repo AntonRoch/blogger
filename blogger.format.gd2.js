@@ -222,13 +222,8 @@ String.prototype.tag2tag = function(tagName, aName1, allowedAttr){
   var tags = hiddenElement.getElementsByTagName(tagName);
   for(var i=0; i<tags.length; i++){
     if(tags[i].attributes.length<1){//Chrome
-      var newTag = document.createElement("p");
-      newTag.innerHTML = tags[i].innerHTML;
-      hiddenElement.replaceChild(newTag,tags[i]);
       continue;
     }
-    var style = tags[i].getAttribute("style");
-    if((style)&&(style.match(/behavior/i))){tags[i].setAttribute("style",style.replace(/behavior/gi,"scr"));}//MSIE.BUG
     for(var j=0; j<tags[i].attributes.length; j++){
       var aaName = tags[i].attributes[j].name.toLowerCase();
       if(((aName1)&&(aaName!=aName1))||((!aName1)&&(!allowedAttr.match(aaName)))){tags[i].removeAttribute(aaName);}
