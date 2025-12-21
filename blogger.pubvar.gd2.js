@@ -1,7 +1,7 @@
 ﻿//////////////////////////////////////////////////
 //
 const standardLongTags = 'iframe,table,font,span,div,img';
-const standardShortTags = 'blockquote,tbody,pre,sub,sup,hr,li,ol,td,tr,ul,p,u';
+const standardShortTags = 'blockquote,strike,tbody,pre,sub,sup,hr,li,ol,td,tr,ul,p,u';
 const imgAllowedFormats = '(jpeg|jpg|gif|png|bmp|webp|avif)';
 const tagAllowedAttributes = {
   img: '(src|width|height|border|id)',
@@ -57,7 +57,7 @@ let DEF_STYLE = 'style="max-width:100%;height:auto"';
 var CommentsCounter = 0;
 var numCommentPerPage = 200;
 var sDefAllowedTagList = "<br><b><i><a>";
-var sMoreAllowedTagList = "<p><img><font><span><div><u><li><ol><ul><sup><sub><blockquote><hr><pre><h1><h2><h3><h4><h5><h6><table><tbody><tr><td><iframe>";
+var sMoreAllowedTagList = "<p><img><font><span><div><u><li><ol><ul><sup><sub><blockquote><hr><pre><h1><h2><h3><h4><h5><h6><table><tbody><tr><td><iframe><strike>";
 var autoResizeCommentFont = true;
 var nFontSizeMax = 6;
 var nFontSizeMin = 3;

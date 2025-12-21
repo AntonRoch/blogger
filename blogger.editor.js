@@ -9,9 +9,22 @@ const urlBloggerCommentIframe = 'https://www.blogger.com/comment/frame';
 const urlPostCommentMinPage = 'https://antonroch.github.io/blogger/blogger.comment.min.html';
 const urlPostCommentPage = 'https://antonroch.github.io/blogger/blogger.comment.html';
 
+const editorConfig = {
+  dialogsInBody: true,
+  toolbar: [['style', ['style']],
+  ['style', ['bold', 'italic', 'underline', 'fontname', 'clear']],
+  ['font', ['strikethrough', 'superscript', 'subscript']],
+  ['color', ['color']],
+  ['insert', ['table', 'hr']],
+  ['para', ['ul', 'ol', 'paragraph']],
+  ['insert', ['link', 'picture', 'video']],
+  ['view', ['undo', 'redo', 'codeview', 'help']]],
+  styleTags: ['pre', 'blockquote']
+}
+
 String.prototype.escapebreaks = function(){return(this.replace(/<\/?p>/gi,'\n').replace(/<br\s*\/?>/gi,'\n').replace(/(\r?\n|\r){3,}/g,'\n\n'))}
 
-function editorInit(config={dialogsInBody:true}, note='#summernote'){
+function editorInit(config=editorConfig, note='#summernote'){
   $(document).ready(function(){
     $(note).summernote(config);
   });
