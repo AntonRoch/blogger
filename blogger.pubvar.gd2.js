@@ -21,7 +21,7 @@ String.prototype.reptagex = function(oldtag, newtag, omark='[', cmark=']'){retur
 String.prototype.repimgtag = function(){return this.replace(regimgtag(), `[img=$1]`)}
 String.prototype.replonetag = function(oldtag, newtag, omark='[', cmark=']'){rep=function(text,func){return(text.replace(func(oldtag),`${omark}${newtag} $1${cmark}${omark}/${newtag}${cmark}`))};return(rep(rep(this,reglonetag),reglonetag2))}
 String.prototype.nicetag = function(){return this.replace(/<[^>]+>/g,function(tag){return(tag.replace(/(\s+[a-zA-Z-]+)=([^\s"'>]+)/g,'$1="$2"').replace(/(\s+[a-zA-Z-]+)='([^']*)'/g,'$1="$2"').replace(/\&quot;/gi,"'"))})}
-String.prototype.nicep = function(){return this.replace(regp(), '<div$1></div>')}
+String.prototype.nicep = function(){return this.replace(regp(), '<div$1>$4</div>')} 
 String.prototype.longreptag = function(oldtag, newtag){return this.repimgtag().reptagex(oldtag,newtag).replonetag(oldtag,newtag)}
 String.prototype.shortreptag = function(oldtag, newtag){return this.repimgtag().reptag(oldtag,newtag).replonetag(oldtag,newtag)}
 const regrev = function(tag, spec='', scope='gi', omark='\\[', cmark='\\]'){return new RegExp(`${omark}${tag}${spec}\\s*([^${cmark}]*)${cmark}([\\w\\W]*?)${omark}\\/${tag}${cmark}`, scope)}
