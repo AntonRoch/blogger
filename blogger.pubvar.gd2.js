@@ -7,7 +7,7 @@ const tagAllowedAttributes = {
   img: '(src|width|height|border|id)',
   div: '(class|style|align|title|id)',
   span: '(class|style|title|id)',
-  font: '(color|face|zise|id)',
+  font: '(color|face|style|id)',
   b: '(class|value|fixed|id)',
 }
 const regimg = function(scope='i', formats=imgAllowedFormats){return new RegExp(`\\.${formats}$`, scope)}
