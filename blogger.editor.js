@@ -52,11 +52,11 @@ function getBloggerPostCommentURL(){
 }
 
 function openBloggerPostCommentPage(){
-  window.open(getBloggerPostCommentURL(), '_blank').focus();
+  openBloggerPostCommentFrame(urlPostCommentPage);
 }
 
-function openBloggerPostCommentFrame(){
-  window.open(`${urlPostCommentMinPage}?blog=${getBloggerBlogID()}&post=${getBloggerPostID()}&head=${blogger_post_comment_header}&name=${editorGetPostTitle()}`).focus();
+function openBloggerPostCommentFrame(url=urlPostCommentMinPage){
+  window.open(`${url}?blog=${getBloggerBlogID()}&post=${getBloggerPostID()}&head=${blogger_post_comment_header}&name=${editorGetPostTitle()}`).focus();
 }
 
 // Using global html2cmt() and copytext(text)
