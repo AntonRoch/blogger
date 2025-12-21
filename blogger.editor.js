@@ -6,8 +6,8 @@ const comment_page_name_divid = 'comment_page_name';
 const comment_container_divid = 'comment_container';
 
 const urlBloggerCommentIframe = 'https://www.blogger.com/comment/frame';
-const urlPostCommentMinPage = 'https://cdn.jsdelivr.net/gh/antonroch/blogger/blogger.comment.min.html';
-const urlPostCommentPage = 'https://cdn.jsdelivr.net/gh/antonroch/blogger/blogger.comment.html';
+const urlPostCommentMinPage = 'https://antonroch.github.io/blogger/blogger.comment.min.html';
+const urlPostCommentPage = 'https://antonroch.github.io/blogger/blogger.comment.html';
 
 String.prototype.escapebreaks = function(){return(this.replace(/<\/?p>/gi,'\n').replace(/<br\s*\/?>/gi,'\n').replace(/(\r?\n|\r){3,}/g,'\n\n'))}
 
