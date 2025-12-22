@@ -1,5 +1,6 @@
 const blogger_post_title_class = 'h3.post-title';
 const blogger_post_comment_header = 'Post comment to Quan Bua';
+const blogger_comment_copy_notice = 'Comment code copied. Now you can paste it to the comment posting input area';
 
 const comment_page_head_divid = 'comment_page_head';
 const comment_page_name_divid = 'comment_page_name';
@@ -60,11 +61,12 @@ function openBloggerPostCommentFrame(url=urlPostCommentMinPage){
 }
 
 // Using global html2cmt() and copytext(text)
-function editorParseCode(linefeed=true, note='#summernote'){
+function editorParseCode(linefeed=true, msg=blogger_comment_copy_notice, note='#summernote'){
   var commentCode = editorGetCode(note);
   comment = commentCode.html2cmt();
   var feed = linefeed ? '\n' : '';
   copytext(feed + comment.trim());
+  alert(msg);
   openBloggerPostCommentFrame();
 }
 
