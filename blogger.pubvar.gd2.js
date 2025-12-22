@@ -1,6 +1,6 @@
 ﻿//////////////////////////////////////////////////
 //
-const standardLongTags = 'iframe,table,font,span,div,img';
+const standardLongTags = 'iframe,table,font,span,div,img,a';
 const standardShortTags = 'blockquote,strike,tbody,pre,sub,sup,hr,li,ol,td,tr,ul,p,u';
 const imgAllowedFormats = '(jpeg|jpg|gif|png|bmp|webp|avif)';
 const tagAllowedAttributes = {
@@ -8,6 +8,7 @@ const tagAllowedAttributes = {
   div: '(class|style|align|title|id)',
   span: '(class|style|title|id)',
   font: '(color|face|style|id)',
+  a: '(name|href|target|title)',
   b: '(class|value|fixed|id)',
 }
 const regimg = function(scope='i', formats=imgAllowedFormats){return new RegExp(`\\.${formats}$`, scope)}
@@ -21,6 +22,7 @@ String.prototype.reptagex = function(oldtag, newtag, omark='[', cmark=']'){retur
 String.prototype.repimgtag = function(){return this.replace(regimgtag(), `[img=$1]`)}
 String.prototype.replonetag = function(oldtag, newtag, omark='[', cmark=']'){rep=function(text,func){return(text.replace(func(oldtag),`${omark}${newtag} $1${cmark}${omark}/${newtag}${cmark}`))};return(rep(rep(this,reglonetag),reglonetag2))}
 String.prototype.nicetag = function(){return this.replace(/<[^>]+>/g,function(tag){return(tag.replace(/(\s+[a-zA-Z-]+)=([^\s"'>]+)/g,'$1="$2"').replace(/(\s+[a-zA-Z-]+)='([^']*)'/g,'$1="$2"').replace(/\&quot;/gi,"'"))})}
+String.prototype.nicea = function(){const temp=document.createElement('div');temp.innerHTML=this;temp.querySelectorAll('a[href]').forEach(link=>{const href=link.getAttribute('href');if(href&&href.toLowerCase().startsWith('javascript:')){link.removeAttribute('href')}});return(temp.innerHTML)}
 String.prototype.nicep = function(){return this.replace(regp(), '<div$1>$4</div>')} 
 String.prototype.longreptag = function(oldtag, newtag){return this.repimgtag().reptagex(oldtag,newtag).replonetag(oldtag,newtag)}
 String.prototype.shortreptag = function(oldtag, newtag){return this.repimgtag().reptag(oldtag,newtag).replonetag(oldtag,newtag)}
