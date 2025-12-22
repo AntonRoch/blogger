@@ -645,7 +645,7 @@ function updateOneCommentHeader(bcId, idPrefix, authorUrl, hideCounter, authorNa
   var quote = `getCommentQuote(decodeURI('${authorName}'),${cmtnum},'${cmtid}')`;
   var gocmt = `<IMG HEIGHT="12" SRC="https://cdn.jsdelivr.net/gh/asinerum/project/team/gui/button.gif" TITLE="Go comment"/>`
   if(editor)
-    comgoid.innerHTML = `<A HREF="javascript:quot=${quote};copytext(quot);editorSetCode(quot);editorSetFocus()">${gocmt}</A>`;
+    comgoid.innerHTML = `<A HREF="javascript:quot=${quote};editorAppendHtml(quot);editorSetFocus()">${gocmt}</A>`;
   else{
     comgoid.innerHTML = `<A HREF="javascript:quot=${quote};copytext(quot);openCommentQuote(quot)">${gocmt}</A>`;
   }

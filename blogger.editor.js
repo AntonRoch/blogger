@@ -31,6 +31,32 @@ function editorInit(config=editorConfig, note='#summernote'){
   });
 }
 
+function editorGetHtml(note='.note-editable'){
+  return $(note).html();
+}
+
+function editorSetHtml(html, note='.note-editable'){
+  return $(note).html(html);
+}
+
+function editorInsertHtml(html, note='.note-editable'){
+  html = html + editorGetHtml(note);
+  editorSetHtml(html, note);  
+}
+
+function editorAppendHtml(html, note='.note-editable'){
+  html = editorGetHtml(note) + html;
+  editorSetHtml(html, note);  
+}
+
+function editorGetText(note='.note-editable'){
+  return $(note).text();
+}
+
+function editorSetText(text, note='.note-editable'){
+  return $(note).text(text);
+}
+
 function editorGetCode(note='#summernote'){
   return $(note).summernote('code');
 }
@@ -74,8 +100,15 @@ function editorSetCode(code='', note='#summernote'){
   $(note).summernote('code', code);
 }
 
-function editorSetFocus(note='.note-editable'){
-  $(note).trigger('focus');
+function editorSetFocus(editor='.note-editor', editable='.note-editable', note='#summernote'){
+  $(note).summernote('focus');
+  let edit = $(note).next(editor).find(editable)[0];
+  let range = document.createRange();
+  let select = window.getSelection();
+  range.selectNodeContents(edit);
+  range.collapse(false);
+  select.removeAllRanges();
+  select.addRange(range);
 }
 
 function editorGetPostTitle(title_class=blogger_post_title_class){
