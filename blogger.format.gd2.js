@@ -703,7 +703,7 @@ const revertTags = function(text, longs=standardLongTags, shorts=standardShortTa
   shorts.split(',').forEach(tag=>{text=text.revtag(tag, tag)});
   text = revertEXTags(text);
   text = revertXTags(text);
-  return text;
+  return text.stripTags().nicea().nicetag();
 }
 const cleanTags = function(text, tagattrs=tagAllowedAttributes){
   Object.entries(tagattrs).forEach(([k,v])=>{text=text.tag2tag(k,'',v)})
