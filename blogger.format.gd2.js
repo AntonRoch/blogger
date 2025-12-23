@@ -207,7 +207,7 @@ function convertCustomTags(text){//25:cmt2html
   return(text);
 }
 function convertCustomFontTags(text){//25
-  return(cleanTags(revertTags(text).stripTags()));
+  return(cleanTags(revertTags(text)));
 }
 function clearCustomTags(text){//25
   return(text.clearcode());
@@ -703,7 +703,7 @@ const revertTags = function(text, longs=standardLongTags, shorts=standardShortTa
   shorts.split(',').forEach(tag=>{text=text.revtag(tag, tag)});
   text = revertEXTags(text);
   text = revertXTags(text);
-  return text.stripTags().nicea().nicetag();
+  return text.stripTags().nicep().nicea().nicetag();
 }
 const cleanTags = function(text, tagattrs=tagAllowedAttributes){
   Object.entries(tagattrs).forEach(([k,v])=>{text=text.tag2tag(k,'',v)})
