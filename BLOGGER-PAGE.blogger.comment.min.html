@@ -1,0 +1,29 @@
+<style>
+.iframe-container {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  padding-top: 56.25%; /*16x9*/
+}
+.iframe-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+</style>
+<h3 id="comment_page_head">Post comment to Quan Bua</h3>
+<h4 id="comment_page_name">Unknown Post</h4>
+<div id="iframe-container" class="iframe-container">
+  <iframe src=""
+    id="comment_container"
+    name="comment_container"
+    frameborder="0"
+    allowfullscreen>
+    Browser does not support iframes
+  </iframe>
+</div>
+<script type="text/javascript">
+  window.onload = editorSetCommentPage();
+</script>

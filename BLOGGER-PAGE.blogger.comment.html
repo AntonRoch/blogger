@@ -1,0 +1,42 @@
+<style>
+.iframe-container {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  padding-top: 56.25%; /*16x9*/
+}
+.iframe-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.reset-style {
+  all: revert;
+}
+</style>
+<h3 id="comment_page_head">Post comment to Quan Bua</h3>
+<h4 id="comment_page_name">Unknown Post</h4>
+<br/>
+<div class="wysiwyg-editor" id="custom-comment-box">
+  <h6>RICH COMMENT EDITOR</h6>
+  <div id="summernote"></div>
+  <button id="submitComment">COPY CODE</button>
+</div>
+<br/>
+<br/>
+<div id="iframe-container" class="iframe-container">
+  <iframe src=""
+    id="comment_container"
+    name="comment_container"
+    frameborder="0"
+    allowfullscreen>
+    Browser does not support iframes
+  </iframe>
+</div>
+<script type="text/javascript">
+  window.onload = editorSetCommentPage();
+  document.getElementById('submitComment').addEventListener('click',function(){editorParseCode(false)});
+  editorInit();
+</script>

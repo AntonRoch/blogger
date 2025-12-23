@@ -7,8 +7,8 @@ const comment_page_name_divid = 'comment_page_name';
 const comment_container_divid = 'comment_container';
 
 const urlBloggerCommentIframe = 'https://www.blogger.com/comment/frame';
-const urlPostCommentMinPage = 'https://antonroch.github.io/blogger/blogger.comment.min.html';
-const urlPostCommentPage = 'https://antonroch.github.io/blogger/blogger.comment.html';
+const urlPostCommentMinPage = 'https://an-hoang-trung-tuong-2014.blogspot.com/p/minimal-commenting-page.html';
+const urlPostCommentPage = 'https://an-hoang-trung-tuong-2014.blogspot.com/p/commenting-page.html';
 
 const editorConfig = {
   dialogsInBody: true,
