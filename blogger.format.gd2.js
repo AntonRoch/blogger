@@ -40,14 +40,14 @@ function sortObject(Objs, rev, back){
   }
   return(sortable);
 }
-String.prototype.include = function(pat){//25
+String.prototype.trim = function(){
+  return(this.replace(/^\s+|\s+$/g,""));
+}
+String.prototype.include = function(pat){
   return(this.toLowerCase().split(',').includes(pat.toLowerCase()));
 }
-String.prototype.in = function(pat){//25
+String.prototype.in = function(pat){
   return(pat.toLowerCase().split(',').includes(this.toLowerCase()));
-}
-String.prototype.extract = function(separator=','){//25
-  return this.split(separator).map(e=>e.trim().toLowerCase())
 }
 Date.prototype.addDays = function(days){
   return(this.setDate(this.getDate()+days));
@@ -55,56 +55,27 @@ Date.prototype.addDays = function(days){
 Date.prototype.toJDStr = function(){
   return(this.toJSON().split('T')[0]);
 }
-function domParser(htmlString, selectors='*', mime='text/html'){//25
-  const parser = new DOMParser();
-  const doc = parser.parseFromString(htmlString, mime);
-  const allElements = doc.querySelectorAll(selectors);
-  return [doc, allElements];
+String.prototype.acceptImg = function(){//25
+  return(this.match(regimg())!=null);
 }
-function removeAttributes(htmlString, attributesToRemove=[]){//25
-  const [doc, allElements] = domParser(htmlString);
-  allElements.forEach(element=>{
-    attributesToRemove.forEach(attrName=>{
-      if(element.hasAttribute(attrName)){
-        element.removeAttribute(attrName);
-      }
-    });
-  });
-  return doc.body.innerHTML;
+String.prototype.stripTags = function(allowed=sDefAllowedTagList+sMoreAllowedTagList){//25
+  var input = this;
+  allowed = (((allowed||"")+"").toLowerCase().match(/<[a-z][a-z0-9]*>/g)||[]).join('');
+  var tags = /<\/?([a-z][a-z0-9]*)\b[^>]*>/gi;
+  var commentsAndPhpTags = /<!--[\s\S]*?-->|<\?(?:php)?[\s\S]*?\?>/gi;
+  return(input.replace(commentsAndPhpTags,'').replace(tags,function($0,$1){
+    return(allowed.indexOf('<'+$1.toLowerCase()+'>')>-1 ? $0 : '');
+  }));
 }
-function stripAttributes(htmlString, allowedAttributes=[], selectors='*'){//25
-  const [doc, allElements] = domParser(htmlString, selectors);
-  allElements.forEach(element=>{
-    const attributesToRemove = [];
-    for(const attr of element.attributes){
-      if(!allowedAttributes.map(e=>e.toLowerCase()).includes(attr.name)){
-        attributesToRemove.push(attr.name);
-      }
-    }
-    attributesToRemove.forEach(attrName=>{
-      element.removeAttribute(attrName);
-    });
-  });
-  return doc.body.innerHTML;
-}
-function stripTags(htmlString, allowedTags=[], osign='<', csign='>'){//25
-  const tempDiv = document.createElement('div');
-  tempDiv.innerHTML = htmlString;
-  const allElements = tempDiv.getElementsByTagName('*');
-  for(let i=allElements.length-1; i>=0; i--){
-    const element = allElements[i];
-    if(!allowedTags.includes(osign+element.tagName.toLowerCase()+csign)){
-      element.parentNode.removeChild(element);
-    }
+String.prototype.gmatch = function(bpat, epat, stid){
+  var res = [];
+  breaks = this.split(bpat);
+  for(var i=0; i<breaks.length; i++){
+    if(breaks[i].match(RegExp(stid, 'i'))
+    && breaks[i].match(epat))
+    res.push(bpat+breaks[i].split(epat)[0]+epat);
   }
-  return tempDiv.innerHTML;
-}
-String.prototype.stripTags = function(allowed=[]){return stripTags(this, allowed)}//25
-String.prototype.cleanTags = function(allowed=sDefAllowedTagList+sMoreAllowedTagList, forbidden=tagForbiddenAttributes, accepted=tagAllowedAttributes){//25
-  text = stripTags(this, allowed.match(/<(.*?)>/g));
-  text = removeAttributes(text, forbidden.extract());
-  Object.entries(accepted).forEach(([key,val]) => {text = stripAttributes(text, val.extract(), key)});
-  return text;
+  return(res);
 }
 String.prototype.replaceText = function(replaceWhat, replaceTo, exp='gi'){//25
   replaceWhat = replaceWhat.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
@@ -114,46 +85,86 @@ String.prototype.replaceText = function(replaceWhat, replaceTo, exp='gi'){//25
 String.prototype.clearText = function(clearWhat, exp='gi'){//25
   return(this.replaceText(clearWhat, '', exp));
 }
-String.prototype.adjustCmtStid = function(stid){//25
-  return this.replace(new RegExp(`\\[${stid}\\]([\\w\\W]+)\\[\/${stid}\\]`, 'gi'), `[${stid}=$1]`);
-}
-String.prototype.replaceCmtStid = function(stid, func){//25
-  return this.replace(new RegExp(`\\[${stid}=([^\\]]+)\\]`, 'gi'), String.prototype[func].call('$1'));
-}
 String.prototype.youtube = function(vid_stid='youtube'){//25
-  vid_stid = vid_stid.toLowerCase();
-  let vidfunc;
+  var res = this;
   if(vid_stid.in('img,image')){
-    vidfunc = 'embedImg';
+    var vidlen = -1;
   }else if(vid_stid=='facebook'){
-    vidfunc = 'embedFacebook';
+    var vidlen = -1;
+    res = res.replaceText('[facebook]', '[facebook=');
+    res = res.replaceText('[/facebook]', ']');
   }else if(vid_stid=='liveleak'){
-    vidfunc = 'embedLiveleak';
+    var vidlen = 6;
+    res = res.replaceText('[liveleak]', '[liveleak=');
+    res = res.replaceText('[/liveleak]', ']');
   }else if(vid_stid=='tiktok'){
-    vidfunc = 'embedTiktok';
+    var vidlen = -1;
+    res = res.replaceText('[tiktok]', '[tiktok=');
+    res = res.replaceText('[/tiktok]', ']');
   }else{
     vid_stid = 'youtube';
-    vidfunc = 'embedYoutube';
+    var vidlen = 11;
+    res = res.replaceText('[youtube]', '[youtube=');
+    res = res.replaceText('[/youtube]', ']');
   }
-  let res = this;
-  res = res.adjustCmtStid(vid_stid);
-  res = res.replaceCmtStid(vid_stid, vidfunc);
+  var stid = vid_stid+'=';
+  var bpat = '[';
+  var epat = ']';
+  var matches = res.gmatch(bpat, epat, stid);
+  for(var i=0; i<matches.length; i++){
+    var vid = matches[i].substring(matches[i].indexOf('=')+1).split(epat)[0].trim();
+    if(vid_stid.in('img,image')){
+      if(!vid.acceptImg()){
+        res = res.replace(matches[i], '(Wrong image embeded)');
+      }else{
+        res = res.replace(matches[i], vid.embedImg());
+      }
+    }else if(vid_stid=='facebook'){
+      vid = vid.split('v=').pop().split('&')[0].split('#')[0].split('<')[0].trim();
+      if(isNaN(vid)){
+        res = res.replace(matches[i], '(Wrong Facebook video embeded)');
+      }else{
+        res = res.replace(matches[i], vid.embedFacebook());
+      }
+    }else if(vid_stid=='liveleak'){
+      vid = vid.split('?').pop().split('&')[0].split('=').pop().trim();
+      if(vid.length!=vidlen){
+        res = res.replace(matches[i], '(Wrong LiveLeak video embeded)');
+      }else{
+        res = res.replace(matches[i], vid.embedLiveleak());
+      }
+    }else if(vid_stid=='tiktok'){
+      vid = vid.split('?')[0].split('/').pop().trim();
+      if(isNaN(vid)){
+        res = res.replace(matches[i], '(Wrong Tiktok video embeded)');
+      }else{
+        res = res.replace(matches[i], vid.embedTiktok());
+      }
+    }else{//YOUTUBE.COM
+      vid = vid.split('v=').pop().split('&')[0].split('#')[0].split('<')[0].split('/').pop().split('?')[0].trim();
+      if(vid.length!=vidlen){
+        res = res.replace(matches[i], '(Wrong Youtube video embeded)');
+      }else{
+        res = res.replace(matches[i], vid.embedYoutube());
+      }
+    }
+  }
   return(res);
 }
-String.prototype.embedImg = function(){//25
-  return(`<img ${DEF_STYLE} src="${this}"></img>`);
+String.prototype.embedImg = function(width=DEF_IMG_WIDTH){//25
+  return(`<img ${DEF_STYLE} src="${this}"/>`);
 }
-String.prototype.embedFacebook = function(){//25
-  return(`<iframe ${DEF_STYLE} src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FPlayStation%2Fvideos%2F${this}%2F&show_text=0" frameborder="0" allowfullscreen></iframe>`);
+String.prototype.embedFacebook = function(width=DEF_IMG_WIDTH, height=DEF_IMG_HEIGHT){//25
+  return(`<iframe width="100%" height="auto" src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FPlayStation%2Fvideos%2F${this}%2F&show_text=0" frameborder="0" allowfullscreen></iframe>`);
 }
-String.prototype.embedLiveleak = function(){//25
-  return(`<iframe ${DEF_STYLE} src="https://www.itemfix.com/e/${this}" frameborder="0" allowfullscreen></iframe>`);
+String.prototype.embedLiveleak = function(width=DEF_IMG_WIDTH, height=DEF_IMG_HEIGHT){//25
+  return(`<iframe width="100%" height="auto" src="https://www.itemfix.com/e/${this}" frameborder="0" allowfullscreen></iframe>`);
 }
-String.prototype.embedYoutube = function(){//25
-  return(`<iframe ${DEF_STYLE} src="https://www.youtube.com/embed/${this}" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture;web-share" frameborder="0" allowfullscreen></iframe>`);
+String.prototype.embedYoutube = function(width=DEF_IMG_WIDTH, height=DEF_IMG_HEIGHT){//25
+  return(`<iframe width="100%" height="auto" src="https://www.youtube.com/embed/${this}" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture;web-share" frameborder="0" allowfullscreen></iframe>`);
 }
-String.prototype.embedTiktok = function(){//25
-  return(`<iframe ${DEF_STYLE} src="https://www.tiktok.com/embed/v2/${this}?lang=en-US" frameborder="0" allowfullscreen></iframe>`);
+String.prototype.embedTiktok = function(width=DEF_IMG_WIDTH, height=DEF_IMG_HEIGHT){//25
+  return(`<iframe width="100%" height="auto" src="https://www.tiktok.com/embed/v2/${this}?lang=en-US" frameborder="0" allowfullscreen></iframe>`);
 }
 String.prototype.json2date = function(){
   var jts = this.split('T');
@@ -184,7 +195,7 @@ function correctTitle(title,langID){
   if(title){return(title.toUpperCase());}
   else return('Unknown page');
 }
-function revertCommentCodeToHtml(text){//25:cmt2html
+function convertCustomTags(text){//25:cmt2html
   text = text.youtube();
   text = text.youtube('facebook');
   text = text.youtube('liveleak');
@@ -192,15 +203,33 @@ function revertCommentCodeToHtml(text){//25:cmt2html
   text = text.youtube('image');
   text = text.youtube('img');
   text = insertSmiley(text);
-  return revertTags(text).cleanTags().nicep().nicea().nicetag();
+  text = convertCustomFontTags(text);
+  return(text);
 }
-function convertCommentHtmlToCode(text){//25
-  return escapeTags(text.cleanTags().nicep().nicea().nicetag().escapebreaks()).trim();
+function convertCustomFontTags(text){//25
+  return(cleanTags(revertTags(text)));
 }
-String.prototype.cmt2html = function(){return(revertCommentCodeToHtml(this))}//25
-String.prototype.html2cmt = function(){return(convertCommentHtmlToCode(this))}//25
 function clearCustomTags(text){//25
-  return(text.clearcode()); //JQuery
+  return(text.clearcode());
+}
+String.prototype.cmt2html = function(){return(convertCustomTags(this))}//25
+String.prototype.html2cmt = function(){//25
+  return(escapeTags(this.nicetag().nicea().nicep().escapebreaks().stripTags()).trim());
+}
+String.prototype.tag2tag = function(tagName, aName1, allowedAttr){
+  var hiddenElement = document.createElement("hiddenDivEx");
+  hiddenElement.innerHTML = this;
+  var tags = hiddenElement.getElementsByTagName(tagName);
+  for(var i=0; i<tags.length; i++){
+    if(tags[i].attributes.length<1){//Chrome
+      continue;
+    }
+    for(var j=0; j<tags[i].attributes.length; j++){
+      var aaName = tags[i].attributes[j].name.toLowerCase();
+      if(((aName1)&&(aaName!=aName1))||((!aName1)&&(!allowedAttr.match(aaName)))){tags[i].removeAttribute(aaName);}
+    }
+  }
+  return(hiddenElement.innerHTML);
 }
 function insertSmiley(htm){
   for(var smiley in iCommentSmileys){
@@ -210,7 +239,7 @@ function insertSmiley(htm){
 }
 function updateDivContent(div_id, content){
   var div = document.getElementById(div_id);
-  if(!content){div.innerHTML=revertCommentCodeToHtml(div.innerHTML);}
+  if(!content){div.innerHTML=convertCustomTags(div.innerHTML);}
   else{div.innerHTML=content;}
 }
 //
@@ -219,7 +248,7 @@ function updateDivContent(div_id, content){
 // Comment-format-customizing:
 //
 function getStyledComment(authorurl, author, published, content){
-  return(openAuthorStyle(authorurl, author, published, true) + closeAuthorStyle(revertCommentCodeToHtml(content.replace(/&quot;/gi,'"').replace(/&#39;/gi,"'")), true));
+  return(openAuthorStyle(authorurl, author, published, true) + closeAuthorStyle(convertCustomTags(content.replace(/&quot;/gi,'"').replace(/&#39;/gi,"'")), true));
 }
 function getStyledTitle(ct, author, authorurl, authoravatar, hrefLink, published){
   return('<a title="' + author + '&nbsp;profile" href="' + authorurl + '"><img src="' + authoravatar + '" width="24" height="24" border="0"/></a>&nbsp;<b><a href="' + hrefLink + '" title="Posted&nbsp;at&nbsp;' + showListedDate(published) + '">' + author + '</a></b>&nbsp;<span style="font-size: x-small; color: #9FC5E8;"><i>(' + ct + ')</i></span>');
@@ -674,6 +703,10 @@ const revertTags = function(text, longs=standardLongTags, shorts=standardShortTa
   shorts.split(',').forEach(tag=>{text=text.revtag(tag, tag)});
   text = revertEXTags(text);
   text = revertXTags(text);
+  return text.stripTags().nicep().nicea().nicetag();
+}
+const cleanTags = function(text, tagattrs=tagAllowedAttributes){
+  Object.entries(tagattrs).forEach(([k,v])=>{text=text.tag2tag(k,'',v)})
   return text;
 }
 const escapeTags = function(text, longs=standardLongTags, shorts=standardShortTags){
