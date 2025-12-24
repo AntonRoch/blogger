@@ -3,13 +3,14 @@
 const standardLongTags = 'iframe,table,font,span,div,img,a';
 const standardShortTags = 'blockquote,strike,tbody,pre,sub,sup,hr,li,ol,td,tr,ul,p,u';
 const imgAllowedFormats = '(jpeg|jpg|gif|png|bmp|webp|avif)';
+const tagForbiddenAttributes = 'onclick,ondblclick,onmouseover,onmouseout,onmousedown,onmouseup,onmousemove,onmouseenter,onmouseleave,onload,onerror,oncontextmenu,sandbox';
 const tagAllowedAttributes = {
-  img: '(src|width|height|border|id)',
-  div: '(class|style|align|title|id)',
-  span: '(class|style|title|id)',
-  font: '(color|face|style|id)',
-  a: '(name|href|target|title)',
-  b: '(class|value|fixed|id)',
+  font: 'color,face,style',
+  span: 'class,style,lang,title',
+  div: 'class,style,align,title',
+  img: 'src,width,height,style',
+  a: 'class,href,target,title',
+  b: 'class,value,fixed',
 }
 const regimg = function(scope='i', formats=imgAllowedFormats){return new RegExp(`\\.${formats}$`, scope)}
 const regtag = function(tag, scope='gi'){return new RegExp(`<${tag}\\s*([^>]*)>([\\w\\W]*?)<\\/${tag}>`, scope)}
@@ -40,6 +41,7 @@ String.prototype.sxrevtag = function(oldtag, spec, newopen, newclose){return thi
 String.prototype.sxrevtagcolon = function(oldtag, newopen, newclose){return this.sxrevtag(oldtag, '\\:', newopen, newclose)}
 String.prototype.sxrevtagequal = function(oldtag, newopen, newclose){return this.sxrevtag(oldtag, '\\=', newopen, newclose)}
 String.prototype.clearcode = function(){return this.replace(/\[[^\]]*\]/g,' ').replace(/(\s){2,}/g,' ').trim()}
+String.prototype.escapebreaks = function(){return(this.replace(/<\/?p>/gi,'\n').replace(/<br\s*\/?>/gi,'\n').replace(/(\r?\n|\r){3,}/g,'\n\n'))}
 //
 //////////////////////////////////////////////////
 //
@@ -56,7 +58,7 @@ const iconImageLocation = `${resourcesLocation}/img`;
 //
 var DEF_IMG_WIDTH = 480;
 var DEF_IMG_HEIGHT = 270;
-let DEF_STYLE = 'style="max-width:100%;height:auto"';
+let DEF_STYLE = 'width="100%" height="auto"';
 //
 var CommentsCounter = 0;
 var numCommentPerPage = 200;

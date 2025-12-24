@@ -23,8 +23,6 @@ const editorConfig = {
   styleTags: ['pre', 'blockquote']
 }
 
-String.prototype.escapebreaks = function(){return(this.replace(/<\/?p>/gi,'\n').replace(/<br\s*\/?>/gi,'\n').replace(/(\r?\n|\r){3,}/g,'\n\n'))}
-
 function editorInit(config=editorConfig, note='#summernote'){
   $(document).ready(function(){
     $(note).summernote(config);
