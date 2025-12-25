@@ -12,6 +12,11 @@ const tagAllowedAttributes = {
   a: 'class,href,target,title',
   b: 'class,value,fixed',
 }
+const tagStyleLimitedProperties = {
+  span: 'width,height',
+  div: 'width,height',
+  img: 'width,height',
+}
 const regimg = function(scope='i', formats=imgAllowedFormats){return new RegExp(`\\.${formats}$`, scope)}
 const regtag = function(tag, scope='gi'){return new RegExp(`<${tag}\\s*([^>]*)>([\\w\\W]*?)<\\/${tag}>`, scope)}
 const regimgtag = function(scope='gi'){return new RegExp(`<img\\b[^>]*src\\s*=\\s*["']([^"']*)["'][^>]*>`, scope)}

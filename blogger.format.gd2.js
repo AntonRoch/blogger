@@ -61,6 +61,19 @@ function domParser(htmlString, selectors='*', mime='text/html'){//25
   const allElements = doc.querySelectorAll(selectors);
   return [doc, allElements];
 }
+function removeStyle(htmlString, properties=['width'], selectors='span'){//25
+  const tempDiv = document.createElement('div');
+  tempDiv.innerHTML = htmlString;
+  const spans = tempDiv.getElementsByTagName(selectors);
+  for(const span of spans){
+    for(const property of properties){
+      if(span.style[property]){
+        span.style.removeProperty(property);
+      }
+    }
+  }
+  return tempDiv.innerHTML;
+}
 function removeAttributes(htmlString, attributesToRemove=[]){//25
   const [doc, allElements] = domParser(htmlString);
   allElements.forEach(element=>{
@@ -100,10 +113,11 @@ function stripTags(htmlString, allowedTags=[], osign='<', csign='>'){//25
   return tempDiv.innerHTML;
 }
 String.prototype.stripTags = function(allowed=[]){return stripTags(this, allowed)}//25
-String.prototype.cleanTags = function(allowed=sDefAllowedTagList+sMoreAllowedTagList, forbidden=tagForbiddenAttributes, accepted=tagAllowedAttributes){//25
+String.prototype.cleanTags = function(allowed=sDefAllowedTagList+sMoreAllowedTagList, forbidden=tagForbiddenAttributes, accepted=tagAllowedAttributes, limited=tagStyleLimitedProperties){//25
   text = stripTags(this, allowed.match(/<(.*?)>/g));
   text = removeAttributes(text, forbidden.extract());
   Object.entries(accepted).forEach(([key,val]) => {text = stripAttributes(text, val.extract(), key)});
+  Object.entries(limited).forEach(([key,val]) => {text = removeStyle(text, val.extract(), key)});
   return text;
 }
 String.prototype.replaceText = function(replaceWhat, replaceTo, exp='gi'){//25
