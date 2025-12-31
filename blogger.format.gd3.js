@@ -323,13 +323,13 @@ function closeAuthorStyle(cbodyId, returnvalue){
   }
   if(returnvalue){return(strTextStyle);}
 }
-function isVIP(uid){
+globalThis.isVIP = function(uid){
   for(var i=0; i<UserVIPs.length; i++){
     if(uid.match(RegExp(UserVIPs[i][0],'i'))){return(i);}
   }
   return(-1);
 }
-function isBL(url, name, ctime){
+globalThis.isBL = function(url, name, ctime){
   for(var i=0; i<UserBLs.length; i++){
     if(url.match(RegExp(UserBLs[i][0], 'gi')) || name.match(RegExp(UserBLs[i][1], 'gi'))){
       rsBLAuthor = UserBLs[i][4] ? UserBLs[i][4] : false;
@@ -350,10 +350,10 @@ function isBL(url, name, ctime){
   }
   return(false);
 }
-function showVIP(uri, tag, width, nbsp, ava, ancRec, ancData){
-  if(ancRec){ancRec='cmt.'+ancRec;}else{ancRec='';}
-  if(ancData){ancData='c'+ancData.split('-')[1];}else{ancData='';}
-  var cmtUrl = strPostURL+"?commentPage="+numCommentPage+"&showComment="+ancData+"#"+ancData;
+globalThis.showVIP = function(uri, tag, width, nbsp, ava, ancNum, ancData, postUrl=strPostURL){
+  let ancRec = ancNum ? 'cmt.'+ancNum : '';
+  if(ancData){ancData='c'+ancData.split('-').slice(-1);}else{ancData='';}
+  var cmtUrl = postUrl+"?commentPage="+Math.ceil(ancNum/numCommentPerPage)+"&showComment="+ancData+"#"+ancData;
   var icon = '';
   var vipID = isVIP(uri);
   if(vipID>=0){
