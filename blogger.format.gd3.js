@@ -232,7 +232,7 @@ function updateDivContent(div_id, content){
 //
 // Comment-format-customizing:
 //
-function getStyledComment(authorurl, author, published, content){
+globalThis.getStyledComment = function(authorurl, author, published, content){
   return(openAuthorStyle(authorurl, author, published, true) + closeAuthorStyle(revertCommentCodeToHtml(content.replace(/&quot;/gi,'"').replace(/&#39;/gi,"'")), true));
 }
 function getStyledTitle(ct, author, authorurl, authoravatar, hrefLink, published){
