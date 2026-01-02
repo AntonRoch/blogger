@@ -47,6 +47,7 @@ String.prototype.sxrevtagcolon = function(oldtag, newopen, newclose){return this
 String.prototype.sxrevtagequal = function(oldtag, newopen, newclose){return this.sxrevtag(oldtag, '\\=', newopen, newclose)}
 String.prototype.clearcode = function(){return this.replace(/\[[^\]]*\]/g,' ').replace(/(\s){2,}/g,' ').trim()}
 String.prototype.escapebreaks = function(){return(this.replace(/<\/?p>/gi,'\n').replace(/<br\s*\/?>/gi,'\n').replace(/(\r?\n|\r){3,}/g,'\n\n'))}
+String.prototype.cleanbrtags = function(){return(this.trim().replace(/(\r?<br>|<br\/>){3,}/gi,'<br><br>').replace(/^\s*(?:<br\s*\/?>\s*)+|(?:<br\s*\/?>\s*)+$/gi,''))}
 //
 //////////////////////////////////////////////////
 //
