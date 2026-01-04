@@ -3,14 +3,20 @@
 const urlJsonData1 = 'https://cdn.jsdelivr.net/gh/asinerum/project/team/buas.json';
 const urlJsonData2 = 'https://asinerum.github.io/project/team/buas.json';
 
-globalThis.loadMembers = function (cbf=console.log, url=urlJsonData1) {
+const LOADED = 'Config loaded';
+
+let ACTIVE_JSON_URL = urlJsonData1;
+
+globalThis.loadMembers = function (cbf=console.log, url=ACTIVE_JSON_URL) {
+  // Require <xmlhttprequest> installed
+  // or just got from JSDOM-GLOBAL
   let xhr = new XMLHttpRequest();
   xhr.open('GET', url, true);
   xhr.responseType = 'json';
   xhr.onload = function () {
     var status = xhr.status;
     if (status === 200) {
-      cbf(null, xhr.response);
+      cbf(null, xhr.response.members);
     } else {
       cbf(status, null);
     }
@@ -18,22 +24,23 @@ globalThis.loadMembers = function (cbf=console.log, url=urlJsonData1) {
   xhr.send();
 }
 
-globalThis.loadMembersSync = function (url=urlJsonData1) {
+globalThis.loadMembersSync = function (url=ACTIVE_JSON_URL) {
+  // Require <xmlhttprequest> installed
+  // or just got from JSDOM-GLOBAL
   let xhr = new XMLHttpRequest();
   try {
     xhr.open('GET', url, false);
     xhr.send(null);
     if (xhr.status === 200) {
-      console.log('Team loaded');
-      return JSON.parse(xhr.responseText);
+      console.log(LOADED);
+      return JSON.parse(xhr.responseText).members;
     }
-  } catch(e) {
-    console.error(`ERROR: ${e}`);
+  } catch(err) {
+    console.error(`ERROR: ${err}`);
   }
-  return {};
 }
 
-globalThis.members = loadMembersSync().members;
+globalThis.members = loadMembersSync();
 
 globalThis.numIndexVip1 = members.numIndexVip1;
 globalThis.numIndexVip2 = members.numIndexVip2;
