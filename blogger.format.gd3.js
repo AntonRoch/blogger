@@ -164,7 +164,7 @@ String.prototype.embedLiveleak = function(){//25
   return(`<iframe ${DEF_STYLE} src="https://www.itemfix.com/e/${this}" frameborder="0" allowfullscreen></iframe>`);
 }
 String.prototype.embedYoutube = function(){//25
-  return(`<iframe ${DEF_STYLE} src="https://www.youtube.com/embed/${this}" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture;web-share" frameborder="0" allowfullscreen></iframe>`);
+  return(`<iframe ${DEF_STYLE} src="https://www.youtube.com/embed/${this}" allow="accelerometer;encrypted-media;gyroscope;picture-in-picture;web-share" frameborder="0" allowfullscreen></iframe>`);
 }
 String.prototype.embedTiktok = function(){//25
   return(`<iframe ${DEF_STYLE} src="https://www.tiktok.com/embed/v2/${this}?lang=en-US" frameborder="0" allowfullscreen></iframe>`);
