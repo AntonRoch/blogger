@@ -3,7 +3,7 @@
 globalThis.standardLongTags = 'iframe,table,font,span,div,img,a';
 globalThis.standardShortTags = 'blockquote,strike,tbody,pre,sub,sup,hr,li,ol,td,tr,ul,p,u';
 globalThis.imgAllowedFormats = '(jpeg|jpg|gif|png|bmp|webp|avif)';
-globalThis.tagForbiddenAttributes = 'onclick,ondblclick,onmouseover,onmouseout,onmousedown,onmouseup,onmousemove,onmouseenter,onmouseleave,onload,onerror,oncontextmenu,sandbox';
+globalThis.tagForbiddenAttributes = 'onclick,ondblclick,onmouseover,onmouseout,onmousedown,onmouseup,onmousemove,onmouseenter,onmouseleave,onload,onerror,oncontextmenu,sandbox,allow,allowfullscreen';
 globalThis.tagAllowedAttributes = {
   font: 'color,face,style',
   span: 'class,style,lang,title',
