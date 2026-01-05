@@ -120,11 +120,21 @@ String.prototype.cleanTags = function(allowed=sDefAllowedTagList+sMoreAllowedTag
   Object.entries(limited).forEach(([key,val]) => {text = removeStyle(text, val.extract(), key)});
   return text;
 }
+String.prototype.forceHttps = function (force='https://') {//25
+  if (this.startsWith('//')) {
+    return 'https:' + this;
+  } else if (/^http:\/\//i.test(this)) {
+    return force + this.substring(7);
+  }
+  return this.toString();
+}
 String.prototype.replaceIframeDimensions = function (newWidth='100%', newHeight='auto') {//25
   const [doc, allElements] = domParser(this.toString(), 'iframe');
   allElements.forEach(iframe => {
     iframe.setAttribute('width', newWidth);
     iframe.setAttribute('height', newHeight);
+    let src;
+    if (src=iframe.getAttribute('src')) iframe.setAttribute('src', src.forceHttps());
   });
   return doc.body.innerHTML;
 }
