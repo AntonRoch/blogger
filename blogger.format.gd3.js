@@ -28,6 +28,173 @@ function getcookie(c_name){
 //
 // Format-functions:
 //
+// Global 25
+//
+String.prototype.ireg = function (scope='i') {
+  return new RegExp(this, scope);
+}
+Array.prototype.findObject = function (key, value) {
+  return this.find(obj => obj[key] === value);
+}
+globalThis.isObject = function (x) {
+  return (typeof x === 'object' && !Array.isArray(x) && x !== null);
+}
+globalThis.cloneObject = function (obj) {
+  return JSON.parse(JSON.stringify(obj));
+}
+function removeFontSizeStyle (htmlString) {
+  const regex = /font-size\s*:\s*[^;"]+;?/gi;
+  return htmlString.replace(regex, '').replace(/style\s*=\s*""/gi, '');
+}
+function removeFontSizeAttribute (htmlString) {
+  const regex = /\s*size\s*=\s*(["'])(?:(?!\1).)*\1|\s*size\s*=\s*\w+/gi;
+  return htmlString.replace(regex, '');
+}
+globalThis.removeFontSize = function (htmlString) {
+  return removeFontSizeStyle(removeFontSizeAttribute(htmlString));
+}
+String.prototype.domdoc = function () {
+  const parser = new DOMParser();
+  return parser.parseFromString(this, 'text/html');
+}
+globalThis.replaceSpanContentByClass = function (htmlString, className, newContent) {
+  const doc = htmlString.domdoc();
+  const spans = doc.querySelectorAll(`span.${className}`);
+  for (const span of spans) {
+    span.textContent = newContent;
+  }
+  return doc.documentElement.innerHTML;
+}
+globalThis.replaceSecondLastAppearance = function (originalString, search, replacement) {
+  const lastIndex = originalString.lastIndexOf(search);
+  if (lastIndex === -1) return originalString;
+  const secondLastIndex = originalString.lastIndexOf(search, lastIndex - 1);
+  if (secondLastIndex === -1) return originalString;
+  const partBefore = originalString.slice(0, secondLastIndex);
+  const partAfter = originalString.slice(secondLastIndex + search.length);
+  return partBefore + replacement + partAfter;
+}
+globalThis.replaceLastAppearance = function (originalString, search, replacement) {
+  const lastIndex = originalString.lastIndexOf(search);
+  if (lastIndex === -1) return originalString;
+  const partBefore = originalString.slice(0, lastIndex);
+  const partAfter = originalString.slice(lastIndex + search.length);
+  return partBefore + replacement + partAfter;
+}
+globalThis.updateCodeLine = function (codeline, toreplace='const', replacewith='var') {
+  if (RegExp(`^${toreplace}\\s+`).test(codeline)) {
+    codeline = codeline.replace(toreplace, replacewith);
+  }
+  return codeline;
+}
+globalThis.getProperties = function (domdoc, idname, property, selector='id') {
+  if (selector === 'class') { selector = `.${idname}`; }
+  else if (selector === 'id') { selector = `#${idname}`; }
+  else { selector = idname; }
+  try {
+    return [...domdoc.querySelectorAll(selector)].map(item => item[property]);
+  } catch (err) {
+    console.log(err.message);
+    return [];
+  }
+}
+globalThis.getAttribute = function (domdoc, {sid, sel='class', attr='textContent'}) {
+  try {
+    const func = (() => {
+      if (sel == 'name') { return 'getElementsByName'; }
+      else if (sel == 'class') { return 'getElementsByClassName'; }
+      else if (sel == 'tag') { return 'getElementsByTagName'; }
+      else { return null; }
+    })();
+    const dom = func ? domdoc[func](sid)[0] : domdoc.getElementById(sid);
+    if (dom) { return dom[attr] || dom.getAttribute(attr); }
+    return null;
+  } catch (err) {
+    console.log(err.message);
+    return null;
+  }
+}
+String.prototype.parse = function (values={}) {
+  let temp = this;
+  Object.entries(values).forEach(([key, val]) => {
+    temp = temp.replace(new RegExp(`\{${key}\}`, 'gi'), val);
+  });
+  return temp;
+}
+String.prototype.html = function (checkonly=true) {
+  return this.createDiv(checkonly);
+}
+// Keeps slash in self-closing tag
+String.prototype.htmlValue = function () {
+  const temp = document.createElement('textarea');
+  temp.innerHTML = this.toString();
+  return temp.value;
+}
+// Escape slash in self-closing tag
+String.prototype.htmlEncode = function () {
+  return this.html(false).innerHTML;
+}
+String.prototype.htmlDecode = function () {
+  return this.replace(/[^\u0000-\u007F]/g, function(match) {
+    const codePoint = match.codePointAt(0);
+    return `&#${codePoint};`;
+  });
+}
+String.prototype.perfect = function () {
+  const origin = this.toString();
+  const text = origin.htmlEncode().htmlDecode();
+  return [origin, origin.replace(/\/>/g, '>')].includes(text);
+}
+String.prototype.createDiv = function (checkonly=false) {
+  const tempDiv = document.createElement('div');
+  tempDiv.innerHTML = this;
+  if (checkonly) return tempDiv.outerHTML;
+  return tempDiv; // Just DIV element object
+}
+String.prototype.generateDiv = function (attributes={}, tag='div') {
+  const formatAttributes = (attrs) => {
+    return Object.entries(attrs)
+      .map(([key, value]) => `${key}="${value}"`)
+      .join(' ');
+  };
+  attributes = formatAttributes(attributes);
+  return `<${tag}${attributes ? ' ': ''}${attributes}>${this}</${tag}>`;
+}
+String.prototype.convertDate = function () {
+  if (/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(this)) {
+    const parts = this.split('/');
+    const day = parts[0].padStart(2, '0');
+    const month = parts[1].padStart(2, '0');
+    const year = parts[2];
+    return `${year}-${month}-${day}`;
+  } else {
+    return (new Date(this)).toISOString().split('T')[0];
+  }
+}
+String.prototype.forceHttps = function (force='https://') {
+  if (this.startsWith('//')) {
+    return 'https:' + this;
+  } else if (/^http:\/\//i.test(this)) {
+    return force + this.substring(7);
+  }
+  return this.toString();
+}
+String.prototype.convertAvatarUrl = function (force='https://') {
+  return `<img src="${this.forceHttps(force)}" class="comment-avatar" width="24" height="24" border="0"/>`;
+}
+String.prototype.replaceIframeDimensions = function (newWidth='100%', newHeight='auto') {
+  const [doc, allElements] = domParser(this.toString(), 'iframe');
+  allElements.forEach(iframe => {
+    iframe.setAttribute('width', newWidth);
+    iframe.setAttribute('height', newHeight);
+    let src;
+    if (src=iframe.getAttribute('src')) iframe.setAttribute('src', src.forceHttps());
+  });
+  return doc.body.innerHTML;
+}
+//
+// Classic
+//
 function sortObject(Objs, rev, back){
   var sortable = [];
   for(var key in Objs){sortable.push([key,Objs[key]]);}
@@ -119,24 +286,6 @@ String.prototype.cleanTags = function(allowed=sDefAllowedTagList+sMoreAllowedTag
   Object.entries(accepted).forEach(([key,val]) => {text = stripAttributes(text, val.extract(), key)});
   Object.entries(limited).forEach(([key,val]) => {text = removeStyle(text, val.extract(), key)});
   return text;
-}
-String.prototype.forceHttps = function (force='https://') {//25
-  if (this.startsWith('//')) {
-    return 'https:' + this;
-  } else if (/^http:\/\//i.test(this)) {
-    return force + this.substring(7);
-  }
-  return this.toString();
-}
-String.prototype.replaceIframeDimensions = function (newWidth='100%', newHeight='auto') {//25
-  const [doc, allElements] = domParser(this.toString(), 'iframe');
-  allElements.forEach(iframe => {
-    iframe.setAttribute('width', newWidth);
-    iframe.setAttribute('height', newHeight);
-    let src;
-    if (src=iframe.getAttribute('src')) iframe.setAttribute('src', src.forceHttps());
-  });
-  return doc.body.innerHTML;
 }
 String.prototype.replaceText = function(replaceWhat, replaceTo, exp='gi'){//25
   replaceWhat = replaceWhat.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
