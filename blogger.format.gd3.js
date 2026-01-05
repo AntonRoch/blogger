@@ -120,6 +120,14 @@ String.prototype.cleanTags = function(allowed=sDefAllowedTagList+sMoreAllowedTag
   Object.entries(limited).forEach(([key,val]) => {text = removeStyle(text, val.extract(), key)});
   return text;
 }
+String.prototype.replaceIframeDimensions = function (newWidth='100%', newHeight='auto') {//25
+  const [doc, allElements] = domParser(this.toString(), 'iframe');
+  allElements.forEach(iframe => {
+    iframe.setAttribute('width', newWidth);
+    iframe.setAttribute('height', newHeight);
+  });
+  return doc.body.innerHTML;
+}
 String.prototype.replaceText = function(replaceWhat, replaceTo, exp='gi'){//25
   replaceWhat = replaceWhat.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
   var reg = new RegExp(replaceWhat, exp);
@@ -233,7 +241,7 @@ function updateDivContent(div_id, content){
 // Comment-format-customizing:
 //
 globalThis.getStyledComment = function(authorurl, author, published, content){
-  return(openAuthorStyle(authorurl, author, published, true) + closeAuthorStyle(revertCommentCodeToHtml(content.replace(/&quot;/gi,'"').replace(/&#39;/gi,"'")), true));
+  return((openAuthorStyle(authorurl, author, published, true) + closeAuthorStyle(revertCommentCodeToHtml(content.replace(/&quot;/gi,'"').replace(/&#39;/gi,"'")), true)).replaceIframeDimensions());
 }
 function getStyledTitle(ct, author, authorurl, authoravatar, hrefLink, published){
   return('<a title="' + author + '&nbsp;profile" href="' + authorurl + '"><img src="' + authoravatar + '" width="24" height="24" border="0"/></a>&nbsp;<b><a href="' + hrefLink + '" title="Posted&nbsp;at&nbsp;' + showListedDate(published) + '">' + author + '</a></b>&nbsp;<span style="font-size: x-small; color: #9FC5E8;"><i>(' + ct + ')</i></span>');
