@@ -853,9 +853,7 @@ globalThis.revertXTags = function(text){
 globalThis.revertTags = function(text, longs=standardLongTags, shorts=standardShortTags){
   longs.split(',').forEach(tag=>{text=text.revtagex(tag, tag)});
   shorts.split(',').forEach(tag=>{text=text.revtag(tag, tag)});
-  text = revertEXTags(text);
-  text = revertXTags(text);
-  return text;
+  return removeFontSize(revertXTags(revertEXTags(text)));
 }
 globalThis.escapeTags = function(text, longs=standardLongTags, shorts=standardShortTags){
   longs.split(',').forEach(tag=>{text=text.longreptag(tag, tag)});
