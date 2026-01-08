@@ -192,6 +192,16 @@ String.prototype.replaceIframeDimensions = function (newWidth='100%', newHeight=
   });
   return doc.body.innerHTML;
 }
+String.prototype.extractInput = function () {
+  const args = this.replace(/\s/g, '').toLowerCase().split(',').map(item => {
+    let elem = {};
+    const key = item.split(':')[0];
+    const val = item.substr(key.length + 1);
+    elem[key] = val;
+    return elem;
+  });
+  return Object.assign({}, ...args);
+}
 //
 // Classic
 //
