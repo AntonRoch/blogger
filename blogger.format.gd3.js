@@ -202,6 +202,19 @@ String.prototype.extractInput = function () {
   });
   return Object.assign({}, ...args);
 }
+globalThis.nowDate = function () {
+  return (new Date()).toISOString().split('T')[0];
+}
+String.prototype.bloggerPostData = function (blog, title, {dated=nowDate(), tid='', page=0, labels=[]}={}) {
+  return {
+    kind: 'blogger#post',
+    blog: { id: blog },
+    title: title + (tid ? ` ${tid}${page}` : ''),
+    content: this.toString(),
+    labels: labels,
+    published: `${dated}T${String(page).padStart(2,'0')}:00:00Z`
+  };
+}
 //
 // Classic
 //
