@@ -215,6 +215,18 @@ String.prototype.bloggerPostData = function (blog, title, {dated=nowDate(), tid=
     published: `${dated}T${String(page).padStart(2,'0')}:00:00Z`
   };
 }
+String.prototype.correctContent = function (profunc, first='<comdiv', last='</comdiv>') {
+  const start = this.indexOf(first);
+  const end = this.lastIndexOf(last) + last.length;
+  const taken = String.prototype[profunc].call(this.substring(start, end));
+  return this.substr(0, start) + taken + this.substr(end);
+}
+String.prototype.pickContent = function (first='<comdiv', last='</comdiv>', outer=true) {
+  const start = this.indexOf(first);
+  const end = this.lastIndexOf(last);
+  if (outer) return this.substring(start, end + last.length);
+  return this.substring(start + first.length, end);
+}
 //
 // Classic
 //
