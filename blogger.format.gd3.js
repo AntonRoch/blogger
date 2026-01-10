@@ -107,11 +107,13 @@ globalThis.getAttribute = function (domdoc, {sid, sel='class', attr='textContent
       else { return null; }
     })();
     const dom = func ? domdoc[func](sid)[0] : domdoc.getElementById(sid);
-    if (dom) { return dom[attr] || dom.getAttribute(attr); }
+    if (dom) {
+      if (dom[attr] !== undefined) return dom[attr];
+      return dom.getAttribute(attr);
+    }
     return null;
   } catch (err) {
-    console.log(err.message);
-    return null;
+    return console.log(err.message);
   }
 }
 String.prototype.parse = function (values={}) {
