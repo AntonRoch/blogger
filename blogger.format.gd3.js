@@ -212,7 +212,7 @@ String.prototype.bloggerPostData = function (blog, title, {dated=nowDate(), tid=
     title: title + (tid ? ` ${tid}${page}` : ''),
     content: this.toString(),
     labels: labels,
-    published: `${dated}T${String(page).padStart(2,'0')}:00:00Z`
+    published: `${dated}T00:${String(page).padStart(2,'0')}:00Z`
   };
 }
 String.prototype.correctContent = function (profunc, first='<comdiv', last='</comdiv>') {
