@@ -163,14 +163,28 @@ String.prototype.generateDiv = function (attributes={}, tag='div') {
   return `<${tag}${attributes ? ' ': ''}${attributes}>${this}</${tag}>`;
 }
 String.prototype.convertDate = function () {
-  if (/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(this)) {
-    const parts = this.split('/');
-    const day = parts[0].padStart(2, '0');
-    const month = parts[1].padStart(2, '0');
-    const year = parts[2];
-    return `${year}-${month}-${day}`;
-  } else {
-    return (new Date(this)).toISOString().split('T')[0];
+  try {
+    if (/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(this)) {
+      const parts = this.split('/');
+      const day = parts[0].padStart(2, '0');
+      const month = parts[1].padStart(2, '0');
+      const year = parts[2];
+      return `${year}-${month}-${day}`;
+    } else {
+      return new Date(this).toISOString().split('T')[0];
+    }
+  } catch {
+    return new Date(this).toString();
+  }
+}
+String.prototype.convertTime = function () {
+  try {
+    const year = this.split('-')[0].split('/')[0];
+    if (year.length === 4) return new Date(this.toString()).toISOString();
+    const date = this.split('T')[0].split(' ')[0];
+    return new Date(this.replace(date, date.convertDate())).toISOString();
+  } catch {
+    return new Date(this).toString();
   }
 }
 String.prototype.forceHttps = function (force='https://') {
