@@ -891,11 +891,11 @@ globalThis.revertEXTags = function(text){
 }
 globalThis.revertXTags = function(text){
   const style = 'style="max-width: 100%; height: auto;"'
-  text = text.xrevtag('im', '<img ${style} src="', '"/>');
-  text = text.xrevtag('img', '<img ${style} src="', '"/>');
-  text = text.xrevtag('fim', '<img ${style} src="', '"/>');
-  text = text.xrevtag('image', '<img ${style} src="', '"/>');
-  text = text.xrevtag('ifr', '<iframe ${style} src="', '"></iframe>');
+  text = text.xrevtag('im', `<img ${style} src="`, '"/>');
+  text = text.xrevtag('img', `<img ${style} src="`, '"/>');
+  text = text.xrevtag('fim', `<img ${style} src="`, '"/>');
+  text = text.xrevtag('image', `<img ${style} src="`, '"/>');
+  text = text.xrevtag('ifr', `<iframe ${style} src="`, '"></iframe>');
   text = text.xrevtag('ac', '<div align=center>', '</div>');
   text = text.xrevtag('ar', '<div align=right>', '</div>');
   text = text.xrevtag('xut', '<b class="xut-', '"></b>');
