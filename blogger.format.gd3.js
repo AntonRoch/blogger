@@ -459,8 +459,8 @@ function getStyledTitle(ct, author, authorurl, authoravatar, hrefLink, published
 function getCounterPat(count){
   return('[CounterPat' + count + ']');
 }
-function openAuthorStyle(url, name, ctime, returnvalue){
-  //\\ [ctime]:DateString
+function openAuthorStyle(url, name, ctime, returnvalue, fontface=true){//25
+  // [ctime]: ISODateString
   isVipAuthor = false;
   isBLAuthor = false;
   isStyleItalic = false;
@@ -483,7 +483,7 @@ function openAuthorStyle(url, name, ctime, returnvalue){
       var sBold = UserVIPs[i][6];
       var sBCol = UserVIPs[i][7];
       var avaID = UserVIPs[i][8]; //ShitAvatar
-      strSetStyle = '<font zise="'+fSize+'" color="'+color+'" face="'+fFace+'">';
+      strSetStyle = `<font color="${color}" face="${fontface?fFace:''}">`;
       if(returnvalue){strTextStyle+=strSetStyle;}
       else{document.write(strSetStyle);}
       if(sItal){
@@ -890,11 +890,12 @@ globalThis.revertEXTags = function(text){
   return text;
 }
 globalThis.revertXTags = function(text){
-  text = text.xrevtag('im', '<img src="', '"/>');
-  text = text.xrevtag('img', '<img src="', '"/>');
-  text = text.xrevtag('fim', '<img src="', '"/>');
-  text = text.xrevtag('image', '<img src="', '"/>');
-  text = text.xrevtag('ifr', '<iframe src="', '"></iframe>');
+  const style = 'style="max-width: 100%; height: auto;"'
+  text = text.xrevtag('im', '<img ${style} src="', '"/>');
+  text = text.xrevtag('img', '<img ${style} src="', '"/>');
+  text = text.xrevtag('fim', '<img ${style} src="', '"/>');
+  text = text.xrevtag('image', '<img ${style} src="', '"/>');
+  text = text.xrevtag('ifr', '<iframe ${style} src="', '"></iframe>');
   text = text.xrevtag('ac', '<div align=center>', '</div>');
   text = text.xrevtag('ar', '<div align=right>', '</div>');
   text = text.xrevtag('xut', '<b class="xut-', '"></b>');
