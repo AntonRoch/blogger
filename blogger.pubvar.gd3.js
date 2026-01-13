@@ -1,6 +1,6 @@
 ﻿//////////////////////////////////////////////////
 //
-globalThis.standardLongTags = 'iframe,table,font,span,div,img,a';
+globalThis.standardLongTags = 'iframe,repdiv,table,font,span,div,img,a';
 globalThis.standardShortTags = 'blockquote,strike,tbody,pre,sub,sup,hr,li,ol,td,tr,ul,p,u';
 globalThis.imgAllowedFormats = '(jpeg|jpg|gif|png|bmp|webp|avif)';
 globalThis.tagForbiddenAttributes = 'onclick,ondblclick,onmouseover,onmouseout,onmousedown,onmouseup,onmousemove,onmouseenter,onmouseleave,onload,onerror,oncontextmenu,sandbox,allow,allowfullscreen';
@@ -48,6 +48,8 @@ String.prototype.sxrevtagequal = function(oldtag, newopen, newclose){return this
 String.prototype.clearcode = function(){return this.replace(/\[[^\]]*\]/g,' ').replace(/(\s){2,}/g,' ').trim()}
 String.prototype.escapebreaks = function(){return(this.replace(/<\/?p>/gi,'\n').replace(/<br\s*\/?>/gi,'\n').replace(/(\r?\n|\r){3,}/g,'\n\n'))}
 String.prototype.cleanbrtags = function(){return(this.trim().replace(/(\r?<br>|<br\/>){3,}/gi,'<br><br>').replace(/^\s*(?:<br\s*\/?>\s*)+|(?:<br\s*\/?>\s*)+$/gi,''))}
+String.prototype.cleanrepptags = function(){return(this.replace(/&nbsp;/gi,' ').replace(/<p>\s*<\/p>/gi,''))}
+String.prototype.cleanrepbrtags = function(){return(this.replace(/(<br>|<br\/>)(<br>|<br\/>)/i,''))}
 //
 //////////////////////////////////////////////////
 //
@@ -63,7 +65,7 @@ globalThis.DEF_STYLE = 'width="100%" height="auto"';
 globalThis.CommentsCounter = 0;
 globalThis.numCommentPerPage = 200;
 globalThis.sDefAllowedTagList = "<br><b><i><a>";
-globalThis.sMoreAllowedTagList = "<p><img><font><span><div><u><li><ol><ul><sup><sub><blockquote><hr><pre><h1><h2><h3><h4><h5><h6><table><tbody><tr><td><iframe><strike>";
+globalThis.sMoreAllowedTagList = "<p><img><font><span><div><u><li><ol><ul><sup><sub><blockquote><hr><pre><h1><h2><h3><h4><h5><h6><table><tbody><tr><td><iframe><strike><repdiv>";
 globalThis.autoResizeCommentFont = true;
 globalThis.nFontSizeMax = 6;
 globalThis.nFontSizeMin = 3;

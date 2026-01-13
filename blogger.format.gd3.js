@@ -450,8 +450,8 @@ function updateDivContent(div_id, content){
 //
 // Comment-format-customizing:
 //
-globalThis.getStyledComment = function(authorurl, author, published, content){
-  return((openAuthorStyle(authorurl, author, published, true) + closeAuthorStyle(revertCommentCodeToHtml(content.replace(/&quot;/gi,'"').replace(/&#39;/gi,"'")), true)).replaceIframeDimensions());
+globalThis.getStyledComment = function(authorurl, author, published, content, fontface=true){//25
+  return((openAuthorStyle(authorurl, author, published, true, fontface) + closeAuthorStyle(revertCommentCodeToHtml(content.replace(/&quot;/gi,'"').replace(/&#39;/gi,"'")), true)).replaceIframeDimensions());
 }
 function getStyledTitle(ct, author, authorurl, authoravatar, hrefLink, published){
   return('<a title="' + author + '&nbsp;profile" href="' + authorurl + '"><img src="' + authoravatar + '" width="24" height="24" border="0"/></a>&nbsp;<b><a href="' + hrefLink + '" title="Posted&nbsp;at&nbsp;' + showListedDate(published) + '">' + author + '</a></b>&nbsp;<span style="font-size: x-small; color: #9FC5E8;"><i>(' + ct + ')</i></span>');
