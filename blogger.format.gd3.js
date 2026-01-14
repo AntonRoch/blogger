@@ -243,6 +243,32 @@ String.prototype.pickContent = function (first='<comdiv', last='</comdiv>', oute
   if (outer) return this.substring(start, end + last.length);
   return this.substring(start + first.length, end);
 }
+globalThis.loadJson = async function (url, format='json') {
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      return console.error(`Error: ${response.status}`);
+    }
+    const jsonData = await response[format]();
+    return jsonData; 
+  } catch (err) {
+    console.error('Error:', err.message);
+    return null;
+  }
+}
+globalThis.blogId = async function (url) {
+  const feedUrl = `${url}/feeds/posts/summary?alt=json&max-results=1&start-index=1`;
+  const data = await loadJson(feedUrl);
+  return data?.feed?.id?.$t?.split('-').pop();
+}
+globalThis.loadVars = async function (url) {
+  const vars = await loadJson(url, 'text');
+  if (vars) {
+    eval(vars);
+    return true;
+  }
+  return false;
+}
 //
 // Classic
 //
