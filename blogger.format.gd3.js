@@ -269,6 +269,10 @@ globalThis.loadVars = async function (url) {
   }
   return false;
 }
+globalThis.removeImgWidth = function (tag='img', attr='width') {
+  const images = document.querySelectorAll(tag);
+  images.forEach(img => { img.removeAttribute(attr); });
+}
 //
 // Classic
 //
