@@ -273,6 +273,14 @@ globalThis.removeImgWidth = function (tag='img', attr='width') {
   const images = document.querySelectorAll(tag);
   images.forEach(img => { img.removeAttribute(attr); });
 }
+globalThis.escapeBigDimension = function (maxval=36, tag='img') {
+  document.querySelectorAll(tag).forEach(img => {
+    if (img.getAttribute('width') > maxval || img.getAttribute('height') > maxval) {
+      img.removeAttribute('width');
+      img.removeAttribute('height');
+    }
+  });
+};
 //
 // Classic
 //
