@@ -117,11 +117,9 @@ globalThis.getAttribute = function (domdoc, {sid, sel='class', attr='textContent
   }
 }
 String.prototype.parse = function (values={}) {
-  let temp = this;
-  Object.entries(values).forEach(([key, val]) => {
-    temp = temp.replace(new RegExp(`\{${key}\}`, 'gi'), val);
+  return this.replace(/{{(.*?)}}/g, (match) => {
+    return values[match.split(/{{|}}/).filter(Boolean)[0].trim()];
   });
-  return temp;
 }
 String.prototype.html = function (checkonly=true) {
   return this.createDiv(checkonly);

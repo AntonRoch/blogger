@@ -6,11 +6,11 @@ globalThis.imgAllowedFormats = '(jpeg|jpg|gif|png|bmp|webp|avif)';
 globalThis.tagForbiddenAttributes = 'onclick,ondblclick,onmouseover,onmouseout,onmousedown,onmouseup,onmousemove,onmouseenter,onmouseleave,onload,onerror,oncontextmenu,sandbox,allow,allowfullscreen';
 globalThis.tagAllowedAttributes = {
   font: 'color,face,style',
-  span: 'class,style,lang,title',
-  div: 'class,style,align,title',
+  span: 'style,lang,title',
+  div: 'style,align,title',
   img: 'src,width,height,style',
-  a: 'class,href,target,title',
-  b: 'class,value,fixed',
+  a: 'href,target,title',
+  b: 'value,fixed',
 }
 globalThis.tagStyleLimitedProperties = {
   span: 'width,height',
