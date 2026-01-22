@@ -881,6 +881,7 @@ function updateOneCommentHeader(bcId, idPrefix, authorUrl, hideCounter, authorNa
   var cmtid = bcId.split('-')[1]; // bcId:[_cmt-xxxxxx]
   if(!hideCounter){mrHead = '<A NAME="cmt.'+cmtnum+'"></A><I><FONT COLOR="#FF9966">('+cmtnum+')</FONT></I>' + mrHead;}
   comheadid.innerHTML = mrHead;
+  authorName = authorName.replace(/'/g, "\\'");
   var quote = `getCommentQuote(decodeURI('${authorName}'),${cmtnum},'${cmtid}')`;
   var gocmt = `<IMG HEIGHT="12" SRC="https://cdn.jsdelivr.net/gh/asinerum/project/team/gui/button.gif" TITLE="Go comment"/>`
   if(editor)
